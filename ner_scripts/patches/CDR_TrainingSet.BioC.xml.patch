@@ -1,0 +1,11 @@
+--- CDR_TrainingSet.BioC.xml	2018-01-25 15:16:31.810076292 +0100
++++ CDR_TrainingSet.BioC.xml.patched	2018-01-25 15:38:10.129154694 +0100
+@@ -53450,7 +53450,7 @@
+ <infon key="type">Disease</infon>
+ <infon key="CompositeRole">IndividualMention</infon>
+ <infon key="MESH">D009436</infon>
+-<location offset='946' length='20' />
++<location offset='948' length='20' />
+ <text>midline (MD) defects</text>
+ </annotation>
+ <annotation id='13'>

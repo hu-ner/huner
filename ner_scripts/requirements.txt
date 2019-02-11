@@ -1,0 +1,5 @@
+pexpect
+tqdm
+lxml
+beautifulsoup4
+rarfile
