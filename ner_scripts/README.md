@@ -1,4 +1,4 @@
-# The Unified BioNER evaluation corpora
+# The HUNER corpora
 
 This collection of scripts obtains 35 BioNER corpora and converts them into the common IOB format with POS tags. The corpora are split into training, development and test set in the ratio 6:1:3.
 
