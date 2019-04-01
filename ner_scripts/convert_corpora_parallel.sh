@@ -80,7 +80,7 @@ python3 $SCRIPT_DIR/gpro_gene_to_conll.py $DATA_DIR/gpro/chemdner_patents_train_
 python3 $SCRIPT_DIR/iepa_gene_to_conll.py $DATA_DIR/iepa.xml $GENE_DIR/iepa.conll &
 
 # JNLPBA
-python3 $SCRIPT_DIR/jnlpba_to_conll.py $DATA_DIR/jnlpba/Genia4ERtask2.iob2 cell_line,cell_type $CELLLINE_DIR/jnlpba.conll &
+python3 $SCRIPT_DIR/jnlpba_to_conll.py $DATA_DIR/jnlpba/Genia4ERtask2.iob2 cell_line $CELLLINE_DIR/jnlpba.conll &
 python3 $SCRIPT_DIR/jnlpba_to_conll.py $DATA_DIR/jnlpba/Genia4ERtask2.iob2 protein $GENE_DIR/jnlpba.conll &
 
 # Linneaus

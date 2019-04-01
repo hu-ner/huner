@@ -54,7 +54,7 @@ for dir in args.input_dirs.split(','):
             try:
                 start = word_to_id[protein.get('span').split('..')[0]]
                 end = word_to_id[protein.get('span').split('..')[-1]]
-                tmp_entities[word_pos[start-1][0]] += [(word_pos[start-1][1], word_pos[end-1][1]+len(words[end-1]))]
+                tmp_entities[word_pos[start][0]] += [(word_pos[start][1], word_pos[end][1]+len(words[end]))]
             except:
                 print('Skipped multipart entity')
         sentences += tmp_sentences

@@ -104,7 +104,7 @@ python3 $SCRIPT_DIR/iepa_gene_to_conll.py $DATA_DIR/iepa.xml $GENE_DIR/iepa.conl
 
 # JNLPBA
 echo "Converting JNLPBA"
-python3 $SCRIPT_DIR/jnlpba_to_conll.py $DATA_DIR/jnlpba/Genia4ERtask2.iob2 cell_line,cell_type $CELLLINE_DIR/jnlpba.conll
+python3 $SCRIPT_DIR/jnlpba_to_conll.py $DATA_DIR/jnlpba/Genia4ERtask2.iob2 cell_line $CELLLINE_DIR/jnlpba.conll
 python3 $SCRIPT_DIR/jnlpba_to_conll.py $DATA_DIR/jnlpba/Genia4ERtask2.iob2 protein $GENE_DIR/jnlpba.conll
 
 # Linneaus
