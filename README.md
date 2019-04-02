@@ -9,6 +9,7 @@ The is based on the great LSTM-CRF NER tagger implementation [glample/tagger](ht
 | [Installation](#installation) | How to install HUNER |
 | [Usage](#usage) | How to use HUNER |
 | [Models](#models) | Available pretrained models |
+| [Corpora](#corpora) | The HUNER Corpora |
 
 
 # Installation
@@ -38,3 +39,5 @@ The options for `client.py` are:
 | [gene_all](https://drive.google.com/open?id=1xdMkeA5HynmrAe4Ky2QwJAqCjP3pp2EO) | 75.01 / 79.16 / 76.81 | 59.67 / 65.98 / 62.66 |
 | [species_all](https://drive.google.com/open?id=1JO6JuG2gz7W3C_44dJ0gmCozKKFsAEo6) | 85.37 / 79.98 / 82.59| 98.51 / 73.83 / 84.40 |
 
+# Corpora
+For details and instructions on the HUNER corpora please refer to https://github.com/hu-ner/huner/tree/master/ner_scripts and the corresponding readme.
