@@ -1,30 +1,40 @@
-# The HUNER tagger
+# HUNER
+HUNER is a state-of-the-art NER model for biomedical entities. It comes with models for genes/proteins, chemicals, diseases, species and cell lines.
 
-This repository provides the HUNER tagger, an easy to use tagger for biomedical named entities. HUNER is able to annotate five different entity types:
-+ Cell Lines
-+ Chemicals
-+ Diseases
-+ Genes/Proteins
-+ Species
+The is based on the great LSTM-CRF NER tagger implementation [glample/tagger](https://github.com/glample/tagger) by Guillaume Lample.
 
-## Requirements
+## Content
+| Section | Description |
+|-|-|
+| [Installation](#installation) | How to install HUNER |
+| [Usage](#usage) | How to use HUNER |
+| [Models](#models) | Available pretrained models |
 
-HUNER is provided as a Docker container. Please install Docker following the instructions on the official webpage: <https://docs.docker.com/install/>
 
-## Usage
+# Installation
+1. [Install docker](https://docs.docker.com/install/)
+1. Clone this repository to `$dir`
+1. Download the pretrained model you want to use from [here](https://drive.google.com/drive/folders/1Y6vdSymGN5QEeEITPF2zZj4qUcoDWvXf) and place it into `$dir/models/$model_name`
 
-To use HUNER please follow these steps:
+# Usage
+To tokenize, sentence split and tag a file INPUT.TXT which contains only of a single line:
 
-1. Clone the repository
-2. Download and unpack the necessary model files into the `models` folder. Model files are provided at <https://drive.google.com/open?id=1Y6vdSymGN5QEeEITPF2zZj4qUcoDWvXf>.
-3. Start the server using `./start_server <model_name>`. Depending on your Docker installation, `sudo` rights might be required.
-4. Tag your text using `python client.py INPUT.TXT OUTPUT.CONLL --name <model_name>`
+1. Start the HUNER server for a model from `$dir/models/`: `./start_server $model_name`
+1. Tag text: `python client.py INPUT.TXT OUTPUT.CONLL --name $model_name`
 
-If your text is already sentence split, use the `--assume_sentence_splitted` flag in the client. HUNER expects one sentence per line. If your text is in addition also already tokenized, use `--assume_tokenized`. Tokens are separated by a whitespace character.
+the output will then be written to OUTPUT.CONLL in the conll2003 format.
 
-Please be aware that HUNER assumes no newlines occur within sentences, irrespective of the flags.
 
-The HUNER server exposes a JSON API over HTTP, with a single `/tag` method. Please consult `tagger.py` for details on the API.  We want to point out, that the HUNER server is not thread safe and might give invalid results for concurrent requests.
+The options for `client.py` are:
+* `--asume_tokenized`: The input is already pre-tokenized and the tokens are separated by whitespace
+* `--assume_sentence_splitted`: The input is already split into sentences and each line of the input contains one sentence
 
-## The HUNER Corpora
-For details and instructions on the HUNER corpora please refer to <https://github.com/hu-ner/huner/tree/master/ner_scripts> and the corresponding readme.
+# Models
+| Model | Test sets P / R / F1 (%) | CRAFT P / R / F1 (%) |
+|   -   |       -      |    -     |
+| [cellline_all](https://drive.google.com/open?id=1aqtenziAHmxEHeaHf8JGdTkRe21ovjts) | 65.09 / 67.69 / 66.08 | - |
+| [chemical_all](https://drive.google.com/open?id=1lEXPKiMZ0x3y51epBIS2kWHG3cNxnN4r) | 83.34 / 80.26 / 81.71 | 53.56 / 35.85 / 42.95 |
+| [disease_all](https://drive.google.com/open?id=12vdtSi3hg_htCXXROKkPV4jaDO3ep8OY) | 75.01 / 77.71 / 76.20 | - |
+| [gene_all](https://drive.google.com/open?id=1xdMkeA5HynmrAe4Ky2QwJAqCjP3pp2EO) | 75.01 / 79.16 / 76.81 | 59.67 / 65.98 / 62.66 |
+| [species_all](https://drive.google.com/open?id=1JO6JuG2gz7W3C_44dJ0gmCozKKFsAEo6) | 85.37 / 79.98 / 82.59| 98.51 / 73.83 / 84.40 |
+
