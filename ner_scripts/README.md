@@ -12,7 +12,7 @@ The corpora cover five domains, which are:
 As some of the corpora contain multiple of these entity types, they appear in the output multiple times.
 
 ## Requirements
-The scripts run on `python3` and require version 3.5 or newer. Install python requirments with `pip install -r requirments.txt`.
+The scripts run on `python3` and require version 3.5 or newer. Install python requirements with `pip install -r requirments.txt`.
 
 For syntactic analysis the scripts depend on Apache OpenNLP. Please download and install it following the instructions at <https://opennlp.apache.org/>.
 Please download the following models and put them in a `models/` subdirectory of your OpenNLP installation.
