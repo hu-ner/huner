@@ -122,6 +122,8 @@ if __name__ == '__main__':
                 line = [line.split()]
             elif args.assume_sentence_splitted:
                 line = [line]
+            else:
+                line = [line]
             c += 1
             buff += line
             if c % args.batchsize == 0:

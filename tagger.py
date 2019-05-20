@@ -25,6 +25,7 @@ parameters = model.parameters
 
 
 def split_sentences(text):
+    text = '\n'.join(text)
     text = text.strip()
     return sentence_splitter.split(text)
 
