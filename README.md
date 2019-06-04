@@ -15,13 +15,13 @@ The is based on the great LSTM-CRF NER tagger implementation [glample/tagger](ht
 # Installation
 1. [Install docker](https://docs.docker.com/install/)
 1. Clone this repository to `$dir`
-1. Download the pretrained model you want to use from [here](https://drive.google.com/drive/folders/1Y6vdSymGN5QEeEITPF2zZj4qUcoDWvXf) and place it into `$dir/models/$model_name`
+1. Download the pretrained model you want to use from [here](https://drive.google.com/drive/folders/1Y6vdSymGN5QEeEITPF2zZj4qUcoDWvXf), place it into `$dir/models/$model_name` and untar it using `tar xzf $model_name`
 
 # Usage
-To tokenize, sentence split and tag a file INPUT.TXT which contains only of a single line:
+To tokenize, sentence split and tag a file INPUT.TXT:
 
-1. Start the HUNER server for a model from `$dir/models/`: `./start_server $model_name`
-1. Tag text: `python client.py INPUT.TXT OUTPUT.CONLL --name $model_name`
+1. Start the HUNER server from `$dir` using `./start_server $model_name`. The model must reside in the directory `$dir/models/$model_name`.
+1. Tag text with `python client.py INPUT.TXT OUTPUT.CONLL --name $model_name`.
 
 the output will then be written to OUTPUT.CONLL in the conll2003 format.
 
