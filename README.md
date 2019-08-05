@@ -41,3 +41,14 @@ The options for `client.py` are:
 
 # Corpora
 For details and instructions on the HUNER corpora please refer to https://github.com/hu-ner/huner/tree/master/ner_scripts and the corresponding readme.
+
+# Citation
+Please use the following bibtex entry:
+```
+@article{weber2019huner,
+  title={HUNER: Improving Biomedical NER with Pretraining},
+  author={Weber, Leon and M{\"u}nchmeyer, Jannes and Rockt{\"a}schel, Tim and Habibi, Maryam and Leser, Ulf},
+  journal={Bioinformatics},
+  year={2019}
+}
+```
