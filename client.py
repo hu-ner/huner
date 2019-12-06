@@ -5,10 +5,10 @@ import argparse
 import requests
 
 
-def get_ip(name: str):
+def get_port(name: str):
     info = subprocess.run(["docker", "inspect", name], stdout=subprocess.PIPE).stdout
     info = json.loads(info)
-    return info[0]['NetworkSettings']['IPAddress']
+    return info[0]['NetworkSettings']['Ports']['5000/tcp'][0]['HostPort']
 
 
 
@@ -22,7 +22,7 @@ def has_entity(sent):
 class HUNERTagger:
     def __init__(self, names=None):
         self.names = names or ["huner"]
-        self.ips = [get_ip(name) for name in self.names]
+        self.ports = [get_port(name) for name in self.names]
 
     def merge_entities(self, results):
         new_results = []
@@ -91,8 +91,8 @@ class HUNERTagger:
     def tag(self, text, split_sentences=True, tokenize=True, merge_names=False, merge_entities=False):
         data = {'text': text, 'split_sentences': split_sentences, 'tokenize': tokenize}
         results = []
-        for name, ip in zip(self.names, self.ips):
-            response = requests.post(f"http://{ip}:5000/tag", json=data)
+        for name, port in zip(self.names, self.ports):
+            response = requests.post(f"http://localhost:{port}/tag", json=data)
             results.append(response.json())
         if merge_names:
             results = self.merge_names(results)
