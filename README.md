@@ -1,7 +1,7 @@
 # HUNER
 HUNER is a state-of-the-art NER model for biomedical entities. It comes with models for genes/proteins, chemicals, diseases, species and cell lines.
 
-The is based on the great LSTM-CRF NER tagger implementation [glample/tagger](https://github.com/glample/tagger) by Guillaume Lample.
+The code is based on the great LSTM-CRF NER tagger implementation [glample/tagger](https://github.com/glample/tagger) by Guillaume Lample.
 
 ## Content
 | Section | Description |
