@@ -113,8 +113,8 @@ python3 $SCRIPT_DIR/linneaus_species_to_conll.py $DATA_DIR/linneaus $SPECIES_DIR
 
 # Loctext
 echo "Converting Loctext"
-python3 $SCRIPT_DIR/loctext_gene_to_conll.py $DATA_DIR/loctext uniprot,go $GENE_DIR/loctext.conll
-python3 $SCRIPT_DIR/loctext_gene_to_conll.py $DATA_DIR/loctext taxonomy $SPECIES_DIR/loctext.conll
+python3 $SCRIPT_DIR/loctext_gene_to_conll.py $DATA_DIR/LocText uniprot,go $GENE_DIR/loctext.conll
+python3 $SCRIPT_DIR/loctext_gene_to_conll.py $DATA_DIR/LocText taxonomy $SPECIES_DIR/loctext.conll
 
 # miRNA
 echo "Converting miRNA"

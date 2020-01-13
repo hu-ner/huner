@@ -235,13 +235,8 @@ if __name__ == '__main__':
         os.remove('linneaus.tar.gz')
 
     # LocText
-    if is_empty('loctext'):
-        urlretrieve('https://www.tagtog.net/-corpora/-dl/loctext/pubannotation',
-                    'loctext.tar.gz')
-        with tarfile.open('loctext.tar.gz') as f:
-            f.extractall()
-        shutil.move('LocText', os.path.join(data_dir, 'loctext'))
-        os.remove('loctext.tar.gz')
+    if is_empty('LocText'):
+		raise ValueError("Please login on https://www.tagtog.net/-login and download the corpus from https://www.tagtog.net/jmcejuela/LocText/-downloads/dataset-as-anndoc . Extract the archive and put the contained folder into the data directory.")
 
     # miRNA
     if is_missing(['miRNA_test.xml', 'miRNA_train.xml']):
