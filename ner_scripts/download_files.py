@@ -213,9 +213,9 @@ if __name__ == '__main__':
 
     # JNLPBA
     if is_empty('jnlpba'):
-        urlretrieve('http://www.nactem.ac.uk/tsujii/GENIA/ERtask/Genia4ERtraining.tar.gz',
+        urlretrieve('http://www.nactem.ac.uk/GENIA/current/Shared-tasks/JNLPBA/Train/Genia4ERtraining.tar.gz',
                     'genia_train.tar.gz')
-        urlretrieve('http://www.nactem.ac.uk/tsujii/GENIA/ERtask/Genia4ERtest.tar.gz',
+        urlretrieve('http://www.nactem.ac.uk/GENIA/current/Shared-tasks/JNLPBA/Evaluation/Genia4ERtest.tar.gz',
                     'genia_test.tar.gz')
         with tarfile.open('genia_train.tar.gz') as f:
             f.extractall(os.path.join(data_dir, 'jnlpba'))
