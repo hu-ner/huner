@@ -236,7 +236,7 @@ if __name__ == '__main__':
 
     # LocText
     if is_empty('loctext'):
-        urlretrieve('https://www.tagtog.net/-corpora/-dl/loctext/pubannotation',
+        urlretrieve('https://www.tagtog.net/jmcejuela/LocText/-downloads/dataset-as-anndoc',
                     'loctext.tar.gz')
         with tarfile.open('loctext.tar.gz') as f:
             f.extractall()
