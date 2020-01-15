@@ -111,15 +111,15 @@ if __name__ == '__main__':
         shutil.rmtree('cemp_training_set')
         shutil.rmtree('cemp_development_set_v03')
 
-    # # CHEBI
-    # if is_empty('chebi'):
-    #     cmd = 'cvs -z3 -d:pserver:anonymous@a.cvs.sourceforge.net:/cvsroot/chebi co -P chapati'
-    #     cmd = shlex.split(cmd)
-    #     subprocess.run(cmd)
-    #     with tarfile.open(os.path.join('chapati', 'patentsGoldStandard', 'PatentAnnotations_GoldStandard.tgz')) as f:
-    #         f.extractall()
-    #         shutil.move('scrapbook', os.path.join(data_dir, 'chebi'))
-    #     shutil.rmtree('chapati')
+    # CHEBI
+    if is_empty('chebi'):
+        cmd = 'cvs -z3 -d:pserver:anonymous@a.cvs.sourceforge.net:/cvsroot/chebi co -P chapati'
+        cmd = shlex.split(cmd)
+        subprocess.run(cmd)
+        with tarfile.open(os.path.join('chapati', 'patentsGoldStandard', 'PatentAnnotations_GoldStandard.tgz')) as f:
+            f.extractall()
+            shutil.move('scrapbook', os.path.join(data_dir, 'chebi'))
+        shutil.rmtree('chapati')
 
 
     # CHEMDNER
