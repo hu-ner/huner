@@ -5,7 +5,7 @@ import os
 import shutil
 import tarfile
 import zipfile
-from urllib.request import urlretrieve
+import requests
 import rarfile
 import shlex
 import subprocess
@@ -40,14 +40,15 @@ if __name__ == '__main__':
 
     # Arizona
     # if not file_exists('arizona.txt'):
-    #     urlretrieve("http://diego.asu.edu/downloads/AZDC_6-26-2009.txt",
+    #     ("http://diego.asu.edu/downloads/AZDC_6-26-2009.txt",
     #                 filename=os.path.join(data_dir, "arizona.txt"))
 
 
     # BioInfer
     if is_missing(['bioinfer.xml']):
-        urlretrieve('http://mars.cs.utu.fi/BioInfer/files/BioInfer_corpus_1.1.1.zip',
-                    'bioinfer.zip')
+        with open('bioinfer.zip', 'wb') as f:
+            resp = requests.get('http://mars.cs.utu.fi/BioInfer/files/BioInfer_corpus_1.1.1.zip')
+            f.write(resp.content)
 
         with zipfile.ZipFile('bioinfer.zip') as f:
             f.extractall()
@@ -57,8 +58,10 @@ if __name__ == '__main__':
 
     # Biosemantics
     if is_empty("biosemantics"):
-        urlretrieve("http://biosemantics.org/PatentCorpus/Patent_Corpus.rar",
-                    "Patent_Corpus.rar")
+        with open('Patent_Corpus.rar', 'wb') as f:
+            resp = requests.get('http://biosemantics.org/PatentCorpus/Patent_Corpus.rar')
+            f.write(resp.content)
+        
         with rarfile.RarFile("Patent_Corpus.rar") as f:
             f.extractall()
             shutil.move(os.path.join("Patent_Corpus/Full_set"), os.path.join("data", "biosemantics"))
@@ -67,9 +70,10 @@ if __name__ == '__main__':
 
     # CellFinder
     if is_empty('cellfinder'):
-        urlretrieve(
-            "https://www.informatik.hu-berlin.de/de/forschung/gebiete/wbi/resources/cellfinder/cellfinder1_brat.tar.gz",
-            "cellfinder.tar.gz")
+        with open('cellfinder.tar.gz', 'wb') as f:
+            resp = requests.get("https://www.informatik.hu-berlin.de/de/forschung/gebiete/wbi/resources/cellfinder/cellfinder1_brat.tar.gz")
+            f.write(resp.content)
+
         path = os.path.join(data_dir, 'cellfinder')
         os.makedirs(path)
         with tarfile.open("cellfinder.tar.gz") as f:
@@ -79,10 +83,12 @@ if __name__ == '__main__':
     # CHEMDNER Patents
     if is_missing(['cemp_train.txt', 'cemp_train.ann',
                    'cemp_val.txt', 'cemp_val.ann']):
-        urlretrieve('http://www.biocreative.org/media/store/files/2015/cemp_training_set.tar.gz',
-                    'cemp_train.tar.gz')
-        urlretrieve('http://www.biocreative.org/media/store/files/2015/cemp_development_set_v03.tar.gz',
-                    'cemp_val.tar.gz')
+        with open('cemp_train.tar.gz', 'wb') as fp:
+            resp = requests.get('http://www.biocreative.org/media/store/files/2015/cemp_training_set.tar.gz')
+            fp.write(resp.content)
+        with open('cemp_val.tar.gz', 'wb') as fp:
+            resp = requests.get('http://www.biocreative.org/media/store/files/2015/cemp_development_set_v03.tar.gz')
+            fp.write(resp.content)
 
         with tarfile.open('cemp_train.tar.gz') as f:
             f.extractall()
@@ -121,8 +127,11 @@ if __name__ == '__main__':
                    'chemdner_val.txt', 'chemdner_val.ann',
                    'chemdner_test.txt', 'chemdner_test.ann'
                    ]):
-        urlretrieve('http://www.biocreative.org/media/store/files/2014/chemdner_corpus.tar.gz',
-                    'chemdner.tar.gz')
+
+        with open('chemdner.tar.gz', 'wb') as fp:
+            resp = requests.get('http://www.biocreative.org/media/store/files/2014/chemdner_corpus.tar.gz')
+            fp.write(resp.content)
+
         with tarfile.open('chemdner.tar.gz') as f:
             f.extractall()
         shutil.move(os.path.join('chemdner_corpus', 'training.abstracts.txt'),
@@ -142,8 +151,10 @@ if __name__ == '__main__':
 
     # CLL
     if is_empty('cll'):
-        urlretrieve('http://bionlp-www.utu.fi/cell-lines/CLL_corpus.tar.gz',
-                    'cll.tar.gz')
+        with open('cll.tar.gz', 'wb') as fp:
+            resp = requests.get('http://bionlp-www.utu.fi/cell-lines/CLL_corpus.tar.gz')
+            fp.write(resp.content)
+
         with tarfile.open('cll.tar.gz') as f:
             f.extractall()
         shutil.move(os.path.join('CLL_corpus', 'conll'),
@@ -153,8 +164,10 @@ if __name__ == '__main__':
 
     # Gellus
     if is_empty('gellus'):
-        urlretrieve('http://bionlp-www.utu.fi/cell-lines/Gellus_corpus.tar.gz',
-                    'gellus.tar.gz')
+        with open('gellus.tar.gz', 'wb') as fp:
+            resp = requests.get('http://bionlp-www.utu.fi/cell-lines/Gellus_corpus.tar.gz')
+            fp.write(resp.content)
+
         with tarfile.open('gellus.tar.gz') as f:
             f.extractall()
         shutil.move(os.path.join('home','smp','cellline_data','GELLUS-1.0.3','conll','all'),
@@ -164,8 +177,10 @@ if __name__ == '__main__':
 
     # DECA
     if is_empty('deca'):
-        urlretrieve('http://www.nactem.ac.uk/deca/species_corpus_0.2.tar.gz',
-                    'deca.tar.gz')
+        with open('deca.tar.gz', 'wb') as fp:
+            resp = requests.get('http://www.nactem.ac.uk/deca/species_corpus_0.2.tar.gz')
+            fp.write(resp.content)
+
         with tarfile.open('deca.tar.gz') as f:
             f.extractall()
         shutil.move('species_corpus_0.2', os.path.join(data_dir, 'deca'))
@@ -173,8 +188,10 @@ if __name__ == '__main__':
 
     # FSU-PRGE
     if is_empty('fsu'):
-        urlretrieve('https://julielab.de/downloads/resources/fsu_prge_release_v1_0.tgz',
-                    'fsu.tar.gz')
+        with open('fsu.tar.gz', 'wb') as fp:
+            resp = requests.get('https://julielab.de/downloads/resources/fsu_prge_release_v1_0.tgz')
+            fp.write(resp.content)
+
         with tarfile.open('fsu.tar.gz') as f:
             f.extractall()
         shutil.move('fsu-prge-release-v1.0', os.path.join(data_dir, 'fsu'))
@@ -182,10 +199,13 @@ if __name__ == '__main__':
 
     # GPRO
     if is_empty('gpro'):
-        urlretrieve('http://www.biocreative.org/media/store/files/2015/gpro_training_set_v02.tar.gz',
-                    'gpro_train.tar.gz')
-        urlretrieve('http://www.biocreative.org/media/store/files/2015/gpro_development_set.tar_.gz',
-                    'gpro_val.tar.gz')
+        with open('gpro_train.tar.gz', 'wb') as fp:
+            resp = requests.get('http://www.biocreative.org/media/store/files/2015/gpro_training_set_v02.tar.gz')
+            fp.write(resp.content)
+
+        with open('gpro_val.tar.gz', 'wb') as fp:
+            resp = requests.get('http://www.biocreative.org/media/store/files/2015/gpro_development_set.tar_.gz')
+            fp.write(resp.content)
 
         with tarfile.open('gpro_train.tar.gz') as f:
             f.extractall()
@@ -204,8 +224,9 @@ if __name__ == '__main__':
 
     # IEPA
     if is_missing(['iepa.xml']):
-        urlretrieve('http://corpora.informatik.hu-berlin.de/corpora/brat2bioc/iepa_bioc.xml.zip',
-                    'iepa.zip')
+        with open('iepa.zip', 'wb') as fp:
+        	resp = requests.get('http://corpora.informatik.hu-berlin.de/corpora/brat2bioc/iepa_bioc.xml.zip')
+        	fp.write(resp.content)
         with zipfile.ZipFile('iepa.zip') as f:
             f.extractall()
         shutil.move('iepa_bioc.xml', os.path.join(data_dir, 'iepa.xml'))
@@ -213,10 +234,12 @@ if __name__ == '__main__':
 
     # JNLPBA
     if is_empty('jnlpba'):
-        urlretrieve('http://www.nactem.ac.uk/GENIA/current/Shared-tasks/JNLPBA/Train/Genia4ERtraining.tar.gz',
-                    'genia_train.tar.gz')
-        urlretrieve('http://www.nactem.ac.uk/GENIA/current/Shared-tasks/JNLPBA/Evaluation/Genia4ERtest.tar.gz',
-                    'genia_test.tar.gz')
+        with open('genia_train.tar.gz', 'wb') as fp:
+        	resp = requests.get('http://www.nactem.ac.uk/GENIA/current/Shared-tasks/JNLPBA/Train/Genia4ERtraining.tar.gz')
+        	fp.write(resp.content)
+        with open('genia_test.tar.gz', 'wb') as fp:
+        	resp = requests.get('http://www.nactem.ac.uk/GENIA/current/Shared-tasks/JNLPBA/Evaluation/Genia4ERtest.tar.gz')
+        	fp.write(resp.content)
         with tarfile.open('genia_train.tar.gz') as f:
             f.extractall(os.path.join(data_dir, 'jnlpba'))
         with tarfile.open('genia_test.tar.gz') as f:
@@ -226,8 +249,9 @@ if __name__ == '__main__':
 
     # Linneaus
     if is_empty('linneaus'):
-        urlretrieve('https://sourceforge.net/projects/linnaeus/files/Corpora/manual-corpus-species-1.0.tar.gz/download',
-                    'linneaus.tar.gz')
+        with open('linneaus.tar.gz', 'wb') as fp:
+        	resp = requests.get('https://sourceforge.net/projects/linnaeus/files/Corpora/manual-corpus-species-1.0.tar.gz/download')
+        	fp.write(resp.content)
         with tarfile.open('linneaus.tar.gz') as f:
             f.extractall()
         shutil.move('manual-corpus-species-1.0',
@@ -235,22 +259,35 @@ if __name__ == '__main__':
         os.remove('linneaus.tar.gz')
 
     # LocText
-    if is_empty('LocText'):
-		raise ValueError("Please login on https://www.tagtog.net/-login and download the corpus from https://www.tagtog.net/jmcejuela/LocText/-downloads/dataset-as-anndoc . Extract the archive and put the contained folder into the data directory.")
+    if is_empty('loctext'):
+        with open('loctext.tar.gz', 'wb') as fp:
+        	resp = requests.get('https://www.tagtog.net/jmcejuela/LocText/-downloads/dataset-as-anndoc')
+        	fp.write(resp.content)
+        with tarfile.open('loctext.tar.gz') as f:
+            f.extractall()
+        shutil.move('LocText', os.path.join(data_dir, 'loctext'))
+        os.remove('loctext.tar.gz')
 
     # miRNA
     if is_missing(['miRNA_test.xml', 'miRNA_train.xml']):
-        urlretrieve('https://www.scai.fraunhofer.de/content/dam/scai/de/downloads/bioinformatik/miRNA/miRNA-Test-Corpus.xml', os.path.join(data_dir, 'miRNA_test.xml'))
-        urlretrieve('https://www.scai.fraunhofer.de/content/dam/scai/de/downloads/bioinformatik/miRNA/miRNA-Train-Corpus.xml', os.path.join(data_dir, 'miRNA_train.xml'))
+        with open(os.path.join(data_dir, 'miRNA_test.xml'), 'wb') as fp:
+        	resp = requests.get('https://www.scai.fraunhofer.de/content/dam/scai/de/downloads/bioinformatik/miRNA/miRNA-Test-Corpus.xml')
+        	fp.write(resp.content)
+        with open(os.path.join(data_dir, 'miRNA_train.xml'), 'wb') as fp:
+        	resp = requests.get('https://www.scai.fraunhofer.de/content/dam/scai/de/downloads/bioinformatik/miRNA/miRNA-Train-Corpus.xml')
+        	fp.write(resp.content)
 
     # NCBI
     if is_empty('ncbi'):
-        urlretrieve('https://www.ncbi.nlm.nih.gov/CBBresearch/Dogan/DISEASE/NCBItrainset_corpus.zip',
-                    'ncbi_train.zip')
-        urlretrieve('https://www.ncbi.nlm.nih.gov/CBBresearch/Dogan/DISEASE/NCBIdevelopset_corpus.zip',
-                    'ncbi_val.zip')
-        urlretrieve('https://www.ncbi.nlm.nih.gov/CBBresearch/Dogan/DISEASE/NCBItestset_corpus.zip',
-                    'ncbi_test.zip')
+        with open('ncbi_train.zip', 'wb') as fp:
+        	resp = requests.get('https://www.ncbi.nlm.nih.gov/CBBresearch/Dogan/DISEASE/NCBItrainset_corpus.zip')
+        	fp.write(resp.content)
+        with open('ncbi_val.zip', 'wb') as fp:
+        	resp = requests.get('https://www.ncbi.nlm.nih.gov/CBBresearch/Dogan/DISEASE/NCBIdevelopset_corpus.zip')
+        	fp.write(resp.content)
+        with open('ncbi_test.zip', 'wb') as fp:
+        	resp = requests.get('https://www.ncbi.nlm.nih.gov/CBBresearch/Dogan/DISEASE/NCBItestset_corpus.zip')
+        	fp.write(resp.content)
         with zipfile.ZipFile('ncbi_train.zip') as f:
             f.extractall(os.path.join(data_dir, 'ncbi'))
         with zipfile.ZipFile('ncbi_val.zip') as f:
@@ -263,7 +300,9 @@ if __name__ == '__main__':
 
     # Osiris
     if is_empty('osiris'):
-        urlretrieve('http://ibi.imim.es/OSIRIScorpusv02.tar', 'osiris.tar')
+        with open('osiris.tar', 'wb') as fp:
+        	resp = requests.get('http://ibi.imim.es/OSIRIScorpusv02.tar')
+        	fp.write(resp.content)
         with tarfile.open('osiris.tar') as f:
             f.extractall()
         shutil.move('OSIRIScorpusv02',
@@ -272,29 +311,33 @@ if __name__ == '__main__':
 
     # S800
     if is_empty('s800'):
-        urlretrieve('https://species.jensenlab.org/files/S800-1.0.tar.gz',
-                    's800.tar.gz')
+        with open('s800.tar.gz', 'wb') as fp:
+        	resp = requests.get('https://species.jensenlab.org/files/S800-1.0.tar.gz')
+        	fp.write(resp.content)
         with tarfile.open('s800.tar.gz') as f:
             f.extractall(os.path.join(data_dir, 's800'))
         os.remove('s800.tar.gz')
 
     # SCAI Chemicals
     if is_missing(['scai_chemicals.conll']):
-        urlretrieve('https://www.scai.fraunhofer.de/content/dam/scai/de/downloads/bioinformatik/Corpora-for-Chemical-Entity-Recognition/chemicals-test-corpus-27-04-2009-v3_iob.gz',
-                    'scai_chemicals.gz')
+        with open('scai_chemicals.gz', 'wb') as fp:
+        	resp = requests.get('https://www.scai.fraunhofer.de/content/dam/scai/de/downloads/bioinformatik/Corpora-for-Chemical-Entity-Recognition/chemicals-test-corpus-27-04-2009-v3_iob.gz')
+        	fp.write(resp.content)
         with gzip.open('scai_chemicals.gz') as f_in, open(os.path.join(data_dir, 'scai_chemicals.conll'), 'wb') as f_out:
             f_out.write(f_in.read())
         os.remove('scai_chemicals.gz')
 
     # SCAI Diseases
     if is_missing(['scai_diseases.conll']):
-        urlretrieve('https://www.scai.fraunhofer.de/content/dam/scai/de/downloads/bioinformatik/Disease-ae-corpus.iob',
-                    os.path.join(data_dir, 'scai_diseases.conll'))
+        with open(os.path.join(data_dir, 'scai_diseases.conll'), 'wb') as fp:
+        	resp = requests.get('https://www.scai.fraunhofer.de/content/dam/scai/de/downloads/bioinformatik/Disease-ae-corpus.iob')
+        	fp.write(resp.content)
 
     # Variome
     if is_missing(['variome.xml']):
-        urlretrieve('http://corpora.informatik.hu-berlin.de/corpora/brat2bioc/hvp_bioc.xml.zip',
-                    'variome.zip')
+        with open('variome.zip', 'wb') as fp:
+        	resp = requests.get('http://corpora.informatik.hu-berlin.de/corpora/brat2bioc/hvp_bioc.xml.zip')
+        	fp.write(resp.content)
         with zipfile.ZipFile('variome.zip') as f:
             f.extractall()
         shutil.move('hvp_bioc.xml', os.path.join(data_dir, 'variome.xml'))
