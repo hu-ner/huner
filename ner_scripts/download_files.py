@@ -302,11 +302,11 @@ if __name__ == '__main__':
 
     # CDR
     if is_empty('CDR_Data'):
-        raise ValueError("Please download the data from http://www.biocreative.org/tasks/biocreative-v/track-3-cdr/ and move the extracted directory to data/ ...")
+        raise ValueError("Please download the data from https://biocreative.bioinformatics.udel.edu/resources/corpora/biocreative-v-cdr-corpus/ and move the extracted directory to data/ ...")
 
     # Biocreative
     if is_empty('bc2gm/train') or is_empty('bc2gm/test'):
-        raise ValueError("Please download the train and test data for the GM subtask from http://www.biocreative.org/resources/corpora/biocreative-ii-corpus/ and place the directories named 'train' and 'test' into data/bc2gm ...")
+        raise ValueError("Please download the train and test data for the GM subtask from https://biocreative.bioinformatics.udel.edu/resources/corpora/biocreative-ii-corpus/ and place the directories named 'train' and 'test' into data/bc2gm ...")
 
 
     print("Success! All corpora should now be available.")
