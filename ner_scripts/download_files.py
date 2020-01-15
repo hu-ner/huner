@@ -84,10 +84,10 @@ if __name__ == '__main__':
     if is_missing(['cemp_train.txt', 'cemp_train.ann',
                    'cemp_val.txt', 'cemp_val.ann']):
         with open('cemp_train.tar.gz', 'wb') as fp:
-            resp = requests.get('http://www.biocreative.org/media/store/files/2015/cemp_training_set.tar.gz')
+            resp = requests.get('https://biocreative.bioinformatics.udel.edu/media/store/files/2015/cemp_training_set.tar.gz')
             fp.write(resp.content)
         with open('cemp_val.tar.gz', 'wb') as fp:
-            resp = requests.get('http://www.biocreative.org/media/store/files/2015/cemp_development_set_v03.tar.gz')
+            resp = requests.get('https://biocreative.bioinformatics.udel.edu/media/store/files/2015/cemp_development_set_v03.tar.gz')
             fp.write(resp.content)
 
         with tarfile.open('cemp_train.tar.gz') as f:
@@ -111,15 +111,15 @@ if __name__ == '__main__':
         shutil.rmtree('cemp_training_set')
         shutil.rmtree('cemp_development_set_v03')
 
-    # CHEBI
-    if is_empty('chebi'):
-        cmd = 'cvs -z3 -d:pserver:anonymous@a.cvs.sourceforge.net:/cvsroot/chebi co -P chapati'
-        cmd = shlex.split(cmd)
-        subprocess.run(cmd)
-        with tarfile.open(os.path.join('chapati', 'patentsGoldStandard', 'PatentAnnotations_GoldStandard.tgz')) as f:
-            f.extractall()
-            shutil.move('scrapbook', os.path.join(data_dir, 'chebi'))
-        shutil.rmtree('chapati')
+    # # CHEBI
+    # if is_empty('chebi'):
+    #     cmd = 'cvs -z3 -d:pserver:anonymous@a.cvs.sourceforge.net:/cvsroot/chebi co -P chapati'
+    #     cmd = shlex.split(cmd)
+    #     subprocess.run(cmd)
+    #     with tarfile.open(os.path.join('chapati', 'patentsGoldStandard', 'PatentAnnotations_GoldStandard.tgz')) as f:
+    #         f.extractall()
+    #         shutil.move('scrapbook', os.path.join(data_dir, 'chebi'))
+    #     shutil.rmtree('chapati')
 
 
     # CHEMDNER
@@ -129,7 +129,7 @@ if __name__ == '__main__':
                    ]):
 
         with open('chemdner.tar.gz', 'wb') as fp:
-            resp = requests.get('http://www.biocreative.org/media/store/files/2014/chemdner_corpus.tar.gz')
+            resp = requests.get('https://biocreative.bioinformatics.udel.edu/media/store/files/2014/chemdner_corpus.tar.gz')
             fp.write(resp.content)
 
         with tarfile.open('chemdner.tar.gz') as f:
@@ -149,18 +149,18 @@ if __name__ == '__main__':
         shutil.rmtree('chemdner_corpus')
         os.remove('chemdner.tar.gz')
 
-    # CLL
-    if is_empty('cll'):
-        with open('cll.tar.gz', 'wb') as fp:
-            resp = requests.get('http://bionlp-www.utu.fi/cell-lines/CLL_corpus.tar.gz')
-            fp.write(resp.content)
+    # # CLL
+    # if is_empty('cll'):
+    #     with open('cll.tar.gz', 'wb') as fp:
+    #         resp = requests.get('http://bionlp-www.utu.fi/cell-lines/CLL_corpus.tar.gz')
+    #         fp.write(resp.content)
 
-        with tarfile.open('cll.tar.gz') as f:
-            f.extractall()
-        shutil.move(os.path.join('CLL_corpus', 'conll'),
-                    os.path.join(data_dir, 'cll'))
-        os.remove('cll.tar.gz')
-        shutil.rmtree('CLL_corpus')
+    #     with tarfile.open('cll.tar.gz') as f:
+    #         f.extractall()
+    #     shutil.move(os.path.join('CLL_corpus', 'conll'),
+    #                 os.path.join(data_dir, 'cll'))
+    #     os.remove('cll.tar.gz')
+    #     shutil.rmtree('CLL_corpus')
 
     # Gellus
     if is_empty('gellus'):
@@ -170,10 +170,10 @@ if __name__ == '__main__':
 
         with tarfile.open('gellus.tar.gz') as f:
             f.extractall()
-        shutil.move(os.path.join('home','smp','cellline_data','GELLUS-1.0.3','conll','all'),
+        shutil.move(os.path.join(parent_dir,'GELLUS-1.0.3','conll','all'),
                     os.path.join(data_dir, 'gellus'))
         os.remove('gellus.tar.gz')
-        shutil.rmtree('home')
+        shutil.rmtree('GELLUS-1.0.3')
 
     # DECA
     if is_empty('deca'):
@@ -200,11 +200,11 @@ if __name__ == '__main__':
     # GPRO
     if is_empty('gpro'):
         with open('gpro_train.tar.gz', 'wb') as fp:
-            resp = requests.get('http://www.biocreative.org/media/store/files/2015/gpro_training_set_v02.tar.gz')
+            resp = requests.get('https://biocreative.bioinformatics.udel.edu/media/store/files/2015/gpro_training_set_v02.tar.gz')
             fp.write(resp.content)
 
         with open('gpro_val.tar.gz', 'wb') as fp:
-            resp = requests.get('http://www.biocreative.org/media/store/files/2015/gpro_development_set.tar_.gz')
+            resp = requests.get('https://biocreative.bioinformatics.udel.edu/media/store/files/2015/gpro_development_set.tar_.gz')
             fp.write(resp.content)
 
         with tarfile.open('gpro_train.tar.gz') as f:
@@ -221,6 +221,8 @@ if __name__ == '__main__':
 
         os.remove('gpro_train.tar.gz')
         os.remove('gpro_val.tar.gz')
+        shutil.rmtree('gpro_training_set_v02')
+        shutil.rmtree('gpro_development_set')
 
     # IEPA
     if is_missing(['iepa.xml']):
@@ -345,11 +347,11 @@ if __name__ == '__main__':
 
     # CDR
     if is_empty('CDR_Data'):
-        raise ValueError("Please download the data from http://www.biocreative.org/tasks/biocreative-v/track-3-cdr/ and move the extracted directory to data/ ...")
+        raise ValueError("Please download the data from https://biocreative.bioinformatics.udel.edu/tasks/biocreative-v/track-3-cdr/ and move the extracted directory to data/ ...")
 
     # Biocreative
     if is_empty('bc2gm/train') or is_empty('bc2gm/test'):
-        raise ValueError("Please download the train and test data for the GM subtask from http://www.biocreative.org/resources/corpora/biocreative-ii-corpus/ and place the directories named 'train' and 'test' into data/bc2gm ...")
+        raise ValueError("Please download the train and test data for the GM subtask from https://biocreative.bioinformatics.udel.edu/resources/corpora/biocreative-ii-corpus/ and place the directories named 'train' and 'test' into data/bc2gm ...")
 
 
     print("Success! All corpora should now be available.")
