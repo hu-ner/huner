@@ -40,8 +40,9 @@ if __name__ == '__main__':
 
     # Arizona
     # if not file_exists('arizona.txt'):
-    #     ("http://diego.asu.edu/downloads/AZDC_6-26-2009.txt",
-    #                 filename=os.path.join(data_dir, "arizona.txt"))
+    #    with open(os.path.join(data_dir, "arizona.txt"), 'w') as f:
+    #        resp = requests.get("http://diego.asu.edu/downloads/AZDC_6-26-2009.txt")
+    #        f.write(resp.content)
 
 
     # BioInfer
@@ -149,18 +150,18 @@ if __name__ == '__main__':
         shutil.rmtree('chemdner_corpus')
         os.remove('chemdner.tar.gz')
 
-    # # CLL
-    # if is_empty('cll'):
-    #     with open('cll.tar.gz', 'wb') as fp:
-    #         resp = requests.get('http://bionlp-www.utu.fi/cell-lines/CLL_corpus.tar.gz')
-    #         fp.write(resp.content)
+    # CLL
+    if is_empty('cll'):
+        with open('cll.tar.gz', 'wb') as fp:
+            resp = requests.get('http://bionlp-www.utu.fi/cell-lines/CLL_corpus.tar.gz')
+            fp.write(resp.content)
 
-    #     with tarfile.open('cll.tar.gz') as f:
-    #         f.extractall()
-    #     shutil.move(os.path.join('CLL_corpus', 'conll'),
-    #                 os.path.join(data_dir, 'cll'))
-    #     os.remove('cll.tar.gz')
-    #     shutil.rmtree('CLL_corpus')
+        with tarfile.open('cll.tar.gz') as f:
+            f.extractall()
+        shutil.move(os.path.join('CLL_corpus', 'conll'),
+                    os.path.join(data_dir, 'cll'))
+        os.remove('cll.tar.gz')
+        shutil.rmtree('CLL_corpus')
 
     # Gellus
     if is_empty('gellus'):
