@@ -18,6 +18,8 @@ The code is based on the great LSTM-CRF NER tagger implementation [glample/tagge
 1. Download the pretrained model you want to use from [here](https://drive.google.com/drive/folders/1Y6vdSymGN5QEeEITPF2zZj4qUcoDWvXf), place it into `$dir/models/$model_name` and untar it using `tar xzf $model_name`
 
 # Usage
+
+# Tagging
 To tokenize, sentence split and tag a file INPUT.TXT:
 
 1. Start the HUNER server from `$dir` using `./start_server $model_name`. The model must reside in the directory `$dir/models/$model_name`.
@@ -29,6 +31,32 @@ the output will then be written to OUTPUT.CONLL in the conll2003 format.
 The options for `client.py` are:
 * `--asume_tokenized`: The input is already pre-tokenized and the tokens are separated by whitespace
 * `--assume_sentence_splitted`: The input is already split into sentences and each line of the input contains one sentence
+
+## Fine-tuning on a new corpus
+The steps to fine-tune a base-model `$base_model` (e.g. `gene_all`) on a new corpus `$corpus` are:
+
+
+1. Copy the chosen base-model to a new directory, because the weight files will be updated during fine-tuning:
+```bash
+cp $dir/models/$base_model $dir/models/$fine_tuned_model
+```
+2. Convert your corpus to conll format and split it into `train`, `dev` and `test` portions. If you don't want to use either dev or test data you can just provide the training data as `dev` or `test`. Note however, that without dev data, results will probably suffer, because early-stopping can't be performed.
+3. Fine-tune the model:
+```bash
+./train.sh $fine_tuned_model $corpus_train $corpus_dev $corpus_test
+```
+After successful training, `$fine_tuned_model` will contain the fine-tuned model and can be used exactly like the models provided by us.
+
+## Retraining a base-model from scratch (without fine-tuning)
+To train a model from scratch without initializing it from a base-model, proceed as follows:
+1. Convert your corpus to conll format and split it into `train`, `dev` and `test` portions. If you don't want to use either dev or test data you can just provide the training data as `dev` or `test`. Note however, that without dev data, results will probably suffer, because early-stopping can't be performed.
+2. Train the model:
+```bash
+./train_no_finetune.sh $corpus_train $corpus_dev $corpus_test
+```
+After sucessful training, the model can be found in a newly created directory in `models/`. The directory name reflects the chosen hyper-parameters and usually reads like `tag_scheme=iob,lower=False,zeros=False,char_dim=25...`.
+
+
 
 # Models
 | Model | Test sets P / R / F1 (%) | CRAFT P / R / F1 (%) |
