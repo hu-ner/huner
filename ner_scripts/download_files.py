@@ -64,7 +64,7 @@ if __name__ == '__main__':
         
         with rarfile.RarFile("Patent_Corpus.rar") as f:
             f.extractall()
-            shutil.move(os.path.join("Patent_Corpus/Full_set"), os.path.join("data", "biosemantics"))
+            shutil.move(os.path.join("Patent_Corpus/Full_set"), os.path.join(data_dir, "biosemantics"))
             os.remove("Patent_Corpus.rar")
             shutil.rmtree("Patent_Corpus")
 
@@ -149,18 +149,18 @@ if __name__ == '__main__':
         shutil.rmtree('chemdner_corpus')
         os.remove('chemdner.tar.gz')
 
-    # # CLL
-    # if is_empty('cll'):
-    #     with open('cll.tar.gz', 'wb') as fp:
-    #         resp = requests.get('http://bionlp-www.utu.fi/cell-lines/CLL_corpus.tar.gz')
-    #         fp.write(resp.content)
+    # CLL
+    if is_empty('cll'):
+        with open('cll.tar.gz', 'wb') as fp:
+            resp = requests.get('http://bionlp-www.utu.fi/cell-lines/CLL_corpus.tar.gz')
+            fp.write(resp.content)
 
-    #     with tarfile.open('cll.tar.gz') as f:
-    #         f.extractall()
-    #     shutil.move(os.path.join('CLL_corpus', 'conll'),
-    #                 os.path.join(data_dir, 'cll'))
-    #     os.remove('cll.tar.gz')
-    #     shutil.rmtree('CLL_corpus')
+        with tarfile.open('cll.tar.gz') as f:
+            f.extractall()
+        shutil.move(os.path.join('CLL-1.0.2', 'conll'),
+                    os.path.join(data_dir, 'cll'))
+        os.remove('cll.tar.gz')
+        shutil.rmtree('CLL-1.0.2')
 
     # Gellus
     if is_empty('gellus'):
@@ -227,8 +227,8 @@ if __name__ == '__main__':
     # IEPA
     if is_missing(['iepa.xml']):
         with open('iepa.zip', 'wb') as fp:
-        	resp = requests.get('http://corpora.informatik.hu-berlin.de/corpora/brat2bioc/iepa_bioc.xml.zip')
-        	fp.write(resp.content)
+            resp = requests.get('http://corpora.informatik.hu-berlin.de/corpora/brat2bioc/iepa_bioc.xml.zip')
+            fp.write(resp.content)
         with zipfile.ZipFile('iepa.zip') as f:
             f.extractall()
         shutil.move('iepa_bioc.xml', os.path.join(data_dir, 'iepa.xml'))
@@ -237,11 +237,11 @@ if __name__ == '__main__':
     # JNLPBA
     if is_empty('jnlpba'):
         with open('genia_train.tar.gz', 'wb') as fp:
-        	resp = requests.get('http://www.nactem.ac.uk/GENIA/current/Shared-tasks/JNLPBA/Train/Genia4ERtraining.tar.gz')
-        	fp.write(resp.content)
+            resp = requests.get('http://www.nactem.ac.uk/GENIA/current/Shared-tasks/JNLPBA/Train/Genia4ERtraining.tar.gz')
+            fp.write(resp.content)
         with open('genia_test.tar.gz', 'wb') as fp:
-        	resp = requests.get('http://www.nactem.ac.uk/GENIA/current/Shared-tasks/JNLPBA/Evaluation/Genia4ERtest.tar.gz')
-        	fp.write(resp.content)
+            resp = requests.get('http://www.nactem.ac.uk/GENIA/current/Shared-tasks/JNLPBA/Evaluation/Genia4ERtest.tar.gz')
+            fp.write(resp.content)
         with tarfile.open('genia_train.tar.gz') as f:
             f.extractall(os.path.join(data_dir, 'jnlpba'))
         with tarfile.open('genia_test.tar.gz') as f:
@@ -252,44 +252,34 @@ if __name__ == '__main__':
     # Linneaus
     if is_empty('linneaus'):
         with open('linneaus.tar.gz', 'wb') as fp:
-        	resp = requests.get('https://sourceforge.net/projects/linnaeus/files/Corpora/manual-corpus-species-1.0.tar.gz/download')
-        	fp.write(resp.content)
+            resp = requests.get('https://sourceforge.net/projects/linnaeus/files/Corpora/manual-corpus-species-1.0.tar.gz/download')
+            fp.write(resp.content)
         with tarfile.open('linneaus.tar.gz') as f:
             f.extractall()
         shutil.move('manual-corpus-species-1.0',
                     os.path.join(data_dir, 'linneaus'))
         os.remove('linneaus.tar.gz')
 
-    # LocText
-    if is_empty('loctext'):
-        with open('loctext.tar.gz', 'wb') as fp:
-        	resp = requests.get('https://www.tagtog.net/jmcejuela/LocText/-downloads/dataset-as-anndoc')
-        	fp.write(resp.content)
-        with tarfile.open('loctext.tar.gz') as f:
-            f.extractall()
-        shutil.move('LocText', os.path.join(data_dir, 'loctext'))
-        os.remove('loctext.tar.gz')
-
     # miRNA
     if is_missing(['miRNA_test.xml', 'miRNA_train.xml']):
         with open(os.path.join(data_dir, 'miRNA_test.xml'), 'wb') as fp:
-        	resp = requests.get('https://www.scai.fraunhofer.de/content/dam/scai/de/downloads/bioinformatik/miRNA/miRNA-Test-Corpus.xml')
-        	fp.write(resp.content)
+            resp = requests.get('https://www.scai.fraunhofer.de/content/dam/scai/de/downloads/bioinformatik/miRNA/miRNA-Test-Corpus.xml')
+            fp.write(resp.content)
         with open(os.path.join(data_dir, 'miRNA_train.xml'), 'wb') as fp:
-        	resp = requests.get('https://www.scai.fraunhofer.de/content/dam/scai/de/downloads/bioinformatik/miRNA/miRNA-Train-Corpus.xml')
-        	fp.write(resp.content)
+            resp = requests.get('https://www.scai.fraunhofer.de/content/dam/scai/de/downloads/bioinformatik/miRNA/miRNA-Train-Corpus.xml')
+            fp.write(resp.content)
 
     # NCBI
     if is_empty('ncbi'):
         with open('ncbi_train.zip', 'wb') as fp:
-        	resp = requests.get('https://www.ncbi.nlm.nih.gov/CBBresearch/Dogan/DISEASE/NCBItrainset_corpus.zip')
-        	fp.write(resp.content)
+            resp = requests.get('https://www.ncbi.nlm.nih.gov/CBBresearch/Dogan/DISEASE/NCBItrainset_corpus.zip')
+            fp.write(resp.content)
         with open('ncbi_val.zip', 'wb') as fp:
-        	resp = requests.get('https://www.ncbi.nlm.nih.gov/CBBresearch/Dogan/DISEASE/NCBIdevelopset_corpus.zip')
-        	fp.write(resp.content)
+            resp = requests.get('https://www.ncbi.nlm.nih.gov/CBBresearch/Dogan/DISEASE/NCBIdevelopset_corpus.zip')
+            fp.write(resp.content)
         with open('ncbi_test.zip', 'wb') as fp:
-        	resp = requests.get('https://www.ncbi.nlm.nih.gov/CBBresearch/Dogan/DISEASE/NCBItestset_corpus.zip')
-        	fp.write(resp.content)
+            resp = requests.get('https://www.ncbi.nlm.nih.gov/CBBresearch/Dogan/DISEASE/NCBItestset_corpus.zip')
+            fp.write(resp.content)
         with zipfile.ZipFile('ncbi_train.zip') as f:
             f.extractall(os.path.join(data_dir, 'ncbi'))
         with zipfile.ZipFile('ncbi_val.zip') as f:
@@ -303,8 +293,8 @@ if __name__ == '__main__':
     # Osiris
     if is_empty('osiris'):
         with open('osiris.tar', 'wb') as fp:
-        	resp = requests.get('http://ibi.imim.es/OSIRIScorpusv02.tar')
-        	fp.write(resp.content)
+            resp = requests.get('http://ibi.imim.es/OSIRIScorpusv02.tar')
+            fp.write(resp.content)
         with tarfile.open('osiris.tar') as f:
             f.extractall()
         shutil.move('OSIRIScorpusv02',
@@ -314,8 +304,8 @@ if __name__ == '__main__':
     # S800
     if is_empty('s800'):
         with open('s800.tar.gz', 'wb') as fp:
-        	resp = requests.get('https://species.jensenlab.org/files/S800-1.0.tar.gz')
-        	fp.write(resp.content)
+            resp = requests.get('https://species.jensenlab.org/files/S800-1.0.tar.gz')
+            fp.write(resp.content)
         with tarfile.open('s800.tar.gz') as f:
             f.extractall(os.path.join(data_dir, 's800'))
         os.remove('s800.tar.gz')
@@ -323,8 +313,8 @@ if __name__ == '__main__':
     # SCAI Chemicals
     if is_missing(['scai_chemicals.conll']):
         with open('scai_chemicals.gz', 'wb') as fp:
-        	resp = requests.get('https://www.scai.fraunhofer.de/content/dam/scai/de/downloads/bioinformatik/Corpora-for-Chemical-Entity-Recognition/chemicals-test-corpus-27-04-2009-v3_iob.gz')
-        	fp.write(resp.content)
+            resp = requests.get('https://www.scai.fraunhofer.de/content/dam/scai/de/downloads/bioinformatik/Corpora-for-Chemical-Entity-Recognition/chemicals-test-corpus-27-04-2009-v3_iob.gz')
+            fp.write(resp.content)
         with gzip.open('scai_chemicals.gz') as f_in, open(os.path.join(data_dir, 'scai_chemicals.conll'), 'wb') as f_out:
             f_out.write(f_in.read())
         os.remove('scai_chemicals.gz')
@@ -332,18 +322,22 @@ if __name__ == '__main__':
     # SCAI Diseases
     if is_missing(['scai_diseases.conll']):
         with open(os.path.join(data_dir, 'scai_diseases.conll'), 'wb') as fp:
-        	resp = requests.get('https://www.scai.fraunhofer.de/content/dam/scai/de/downloads/bioinformatik/Disease-ae-corpus.iob')
-        	fp.write(resp.content)
+            resp = requests.get('https://www.scai.fraunhofer.de/content/dam/scai/de/downloads/bioinformatik/Disease-ae-corpus.iob')
+            fp.write(resp.content)
 
     # Variome
     if is_missing(['variome.xml']):
         with open('variome.zip', 'wb') as fp:
-        	resp = requests.get('http://corpora.informatik.hu-berlin.de/corpora/brat2bioc/hvp_bioc.xml.zip')
-        	fp.write(resp.content)
+            resp = requests.get('http://corpora.informatik.hu-berlin.de/corpora/brat2bioc/hvp_bioc.xml.zip')
+            fp.write(resp.content)
         with zipfile.ZipFile('variome.zip') as f:
             f.extractall()
         shutil.move('hvp_bioc.xml', os.path.join(data_dir, 'variome.xml'))
         os.remove('variome.zip')
+
+    # LocText
+    if is_empty('loctext'):
+        raise ValueError("Please create an account at https://www.tagtog.net and download the data from https://www.tagtog.net/jmcejuela/LocText/-downloads/dataset-as-anndoc and move the LocText directory to data/loctext")
 
     # CDR
     if is_empty('CDR_Data'):
