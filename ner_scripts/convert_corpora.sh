@@ -38,13 +38,13 @@ python3 $SCRIPT_DIR/biosemantics_to_conll.py $DATA_DIR/biosemantics Disease $DIS
 
 # CDR
 echo "Converting CDR"
-patch $DATA_DIR/CDR_Data/CDR_Data/CDR.Corpus.v010516/CDR_TrainingSet.BioC.xml patches/CDR_TrainingSet.BioC.xml.patch -o $DATA_DIR/CDR_Data/CDR_Data/CDR.Corpus.v010516/CDR_TrainingSet.BioC.xml.patched
-python3 $SCRIPT_DIR/cdr_to_conll.py $DATA_DIR/CDR_Data/CDR_Data/CDR.Corpus.v010516/CDR_DevelopmentSet.BioC.xml $DISEASE_DIR/cdr1.conll Disease
-python3 $SCRIPT_DIR/cdr_to_conll.py $DATA_DIR/CDR_Data/CDR_Data/CDR.Corpus.v010516/CDR_DevelopmentSet.BioC.xml $CHEMICAL_DIR/cdr1.conll Chemical
-python3 $SCRIPT_DIR/cdr_to_conll.py $DATA_DIR/CDR_Data/CDR_Data/CDR.Corpus.v010516/CDR_TestSet.BioC.xml $DISEASE_DIR/cdr2.conll Disease
-python3 $SCRIPT_DIR/cdr_to_conll.py $DATA_DIR/CDR_Data/CDR_Data/CDR.Corpus.v010516/CDR_TestSet.BioC.xml $CHEMICAL_DIR/cdr2.conll Chemical
-python3 $SCRIPT_DIR/cdr_to_conll.py $DATA_DIR/CDR_Data/CDR_Data/CDR.Corpus.v010516/CDR_TrainingSet.BioC.xml.patched $DISEASE_DIR/cdr3.conll Disease
-python3 $SCRIPT_DIR/cdr_to_conll.py $DATA_DIR/CDR_Data/CDR_Data/CDR.Corpus.v010516/CDR_TrainingSet.BioC.xml.patched $CHEMICAL_DIR/cdr3.conll Chemical
+patch $DATA_DIR/CDR_Data/CDR.Corpus.v010516/CDR_TrainingSet.BioC.xml patches/CDR_TrainingSet.BioC.xml.patch -o $DATA_DIR/CDR_Data/CDR.Corpus.v010516/CDR_TrainingSet.BioC.xml.patched
+python3 $SCRIPT_DIR/cdr_to_conll.py $DATA_DIR/CDR_Data/CDR.Corpus.v010516/CDR_DevelopmentSet.BioC.xml $DISEASE_DIR/cdr1.conll Disease
+python3 $SCRIPT_DIR/cdr_to_conll.py $DATA_DIR/CDR_Data/CDR.Corpus.v010516/CDR_DevelopmentSet.BioC.xml $CHEMICAL_DIR/cdr1.conll Chemical
+python3 $SCRIPT_DIR/cdr_to_conll.py $DATA_DIR/CDR_Data/CDR.Corpus.v010516/CDR_TestSet.BioC.xml $DISEASE_DIR/cdr2.conll Disease
+python3 $SCRIPT_DIR/cdr_to_conll.py $DATA_DIR/CDR_Data/CDR.Corpus.v010516/CDR_TestSet.BioC.xml $CHEMICAL_DIR/cdr2.conll Chemical
+python3 $SCRIPT_DIR/cdr_to_conll.py $DATA_DIR/CDR_Data/CDR.Corpus.v010516/CDR_TrainingSet.BioC.xml.patched $DISEASE_DIR/cdr3.conll Disease
+python3 $SCRIPT_DIR/cdr_to_conll.py $DATA_DIR/CDR_Data/CDR.Corpus.v010516/CDR_TrainingSet.BioC.xml.patched $CHEMICAL_DIR/cdr3.conll Chemical
 cat $DISEASE_DIR/cdr1.conll $DISEASE_DIR/cdr2.conll $DISEASE_DIR/cdr3.conll > $DISEASE_DIR/cdr.conll
 rm $DISEASE_DIR/cdr1.conll $DISEASE_DIR/cdr2.conll $DISEASE_DIR/cdr3.conll
 cat $CHEMICAL_DIR/cdr1.conll $CHEMICAL_DIR/cdr2.conll $CHEMICAL_DIR/cdr3.conll > $CHEMICAL_DIR/cdr.conll
