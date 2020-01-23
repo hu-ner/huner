@@ -31,13 +31,14 @@ ENV OPENNLP /usr/bin/apache-opennlp-1.8.4
 RUN mkdir -p $OPENNLP/models
 RUN curl -o $OPENNLP/models/en-sent.bin http://opennlp.sourceforge.net/models-1.5/en-sent.bin
 RUN curl -o $OPENNLP/models/en-token.bin http://opennlp.sourceforge.net/models-1.5/en-token.bin
+RUN curl -o $OPENNLP/models/en-pos-maxent.bin http://opennlp.sourceforge.net/models-1.5/en-pos-maxent.bin
 
 
 # Install bleeding-edge Theano
 RUN pip install --upgrade pip
 RUN pip install --upgrade six
 RUN pip install --upgrade --no-deps git+git://github.com/Theano/Theano.git
-RUN pip install joblib gunicorn flask pexpect
+RUN pip install joblib gunicorn flask pexpect tqdm beautifulsoup4
 
 EXPOSE 5000:5000
 
