@@ -37,7 +37,7 @@ RUN curl -o $OPENNLP/models/en-token.bin http://opennlp.sourceforge.net/models-1
 RUN pip install --upgrade pip
 RUN pip install --upgrade six
 RUN pip install --upgrade --no-deps git+git://github.com/Theano/Theano.git
-RUN pip install joblib gunicorn flask pexpect
+RUN pip install joblib gunicorn flask pexpect lxml
 
 EXPOSE 5000:5000
 
