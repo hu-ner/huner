@@ -24,16 +24,16 @@ docker pull huner/huner:dev;
 # docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:dev /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/arizona_disease_to_conll.py $DATA_DIR/arizona.txt $DISEASE_DIR/arizona.conll
 
 # BioCreative 2 GeneMentions
-#echo "Converting BC2GM"
-#docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:dev /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/bc2gm_gene_to_conll.py $DATA_DIR/bc2gm/train/train.in $DATA_DIR/bc2gm/train/GENE.eval $GENE_DIR/bc2gm1.conll"
-#docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:dev /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/bc2gm_gene_to_conll.py $DATA_DIR/bc2gm/test/test.in $DATA_DIR/bc2gm/test/GENE.eval $GENE_DIR/bc2gm2.conll"
-#cat $GENE_DIR/bc2gm1.conll $GENE_DIR/bc2gm2.conll > $GENE_DIR/bc2gm.conll
-#rm $GENE_DIR/bc2gm1.conll
-#rm $GENE_DIR/bc2gm2.conll
+echo "Converting BC2GM"
+docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:dev /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/bc2gm_gene_to_conll.py $DATA_DIR/bc2gm/train/train.in $DATA_DIR/bc2gm/train/GENE.eval $GENE_DIR/bc2gm1.conll"
+docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:dev /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/bc2gm_gene_to_conll.py $DATA_DIR/bc2gm/test/test.in $DATA_DIR/bc2gm/test/GENE.eval $GENE_DIR/bc2gm2.conll"
+cat $GENE_DIR/bc2gm1.conll $GENE_DIR/bc2gm2.conll > $GENE_DIR/bc2gm.conll
+rm $GENE_DIR/bc2gm1.conll
+rm $GENE_DIR/bc2gm2.conll
 
 ## BioInfer
-#echo "Converting BioInfer"
-#docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:dev /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/bioinfer_to_conll.py $DATA_DIR/bioinfer.xml $GENE_DIR/bioinfer.conll"
+echo "Converting BioInfer"
+docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:dev /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/bioinfer_to_conll.py $DATA_DIR/bioinfer.xml $GENE_DIR/bioinfer.conll"
 
 # Biosemantics
 echo "Converting Biosemantics"
