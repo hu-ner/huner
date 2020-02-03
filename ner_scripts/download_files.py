@@ -38,13 +38,7 @@ if __name__ == '__main__':
             return False
 
 
-    # Arizona
-    # if not file_exists('arizona.txt'):
-    #     ("http://diego.asu.edu/downloads/AZDC_6-26-2009.txt",
-    #                 filename=os.path.join(data_dir, "arizona.txt"))
-
-
-    # BioInfer
+    #BioInfer
     if is_missing(['bioinfer.xml']):
         with open('bioinfer.zip', 'wb') as f:
             resp = requests.get('http://mars.cs.utu.fi/BioInfer/files/BioInfer_corpus_1.1.1.zip')
@@ -336,8 +330,15 @@ if __name__ == '__main__':
         os.remove('variome.zip')
 
     # LocText
-    if is_empty('loctext'):
-        raise ValueError("Please create an account at https://www.tagtog.net and download the data from https://www.tagtog.net/jmcejuela/LocText/-downloads/dataset-as-anndoc and move the LocText directory to data/loctext")
+    if is_empty('LocText'):
+        with open('loctext.tar.gz', 'wb') as fp:
+            resp = requests.get('http://pubannotation.org/projects/LocText/annotations.tgz')
+            fp.write(resp.content)
+        with tarfile.open('loctext.tar.gz') as f:
+            f.extractall()
+        shutil.move('LocText', os.path.join(data_dir))
+        os.remove('loctext.tar.gz')
+
 
     # CDR
     if is_empty('CDR_Data'):
