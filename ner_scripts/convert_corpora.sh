@@ -15,40 +15,40 @@ mkdir -p $SPECIES_DIR
 mkdir -p $CELLLINE_DIR
 mkdir -p $CHEMICAL_DIR
 
-docker pull huner/huner:dev;
+docker pull huner/huner:master;
 
 
 
 # Arizona disease
 # echo "Converting Arizona"
-# docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:dev /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/arizona_disease_to_conll.py $DATA_DIR/arizona.txt $DISEASE_DIR/arizona.conll
+# docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:master /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/arizona_disease_to_conll.py $DATA_DIR/arizona.txt $DISEASE_DIR/arizona.conll
 
 # BioCreative 2 GeneMentions
 echo "Converting BC2GM"
-docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:dev /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/bc2gm_gene_to_conll.py $DATA_DIR/bc2gm/train/train.in $DATA_DIR/bc2gm/train/GENE.eval $GENE_DIR/bc2gm1.conll"
-docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:dev /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/bc2gm_gene_to_conll.py $DATA_DIR/bc2gm/test/test.in $DATA_DIR/bc2gm/test/GENE.eval $GENE_DIR/bc2gm2.conll"
+docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:master /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/bc2gm_gene_to_conll.py $DATA_DIR/bc2gm/train/train.in $DATA_DIR/bc2gm/train/GENE.eval $GENE_DIR/bc2gm1.conll"
+docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:master /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/bc2gm_gene_to_conll.py $DATA_DIR/bc2gm/test/test.in $DATA_DIR/bc2gm/test/GENE.eval $GENE_DIR/bc2gm2.conll"
 cat $GENE_DIR/bc2gm1.conll $GENE_DIR/bc2gm2.conll > $GENE_DIR/bc2gm.conll
 rm $GENE_DIR/bc2gm1.conll
 rm $GENE_DIR/bc2gm2.conll
 
 ## BioInfer
 echo "Converting BioInfer"
-docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:dev /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/bioinfer_to_conll.py $DATA_DIR/bioinfer.xml $GENE_DIR/bioinfer.conll"
+docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:master /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/bioinfer_to_conll.py $DATA_DIR/bioinfer.xml $GENE_DIR/bioinfer.conll"
 
 # Biosemantics
 echo "Converting Biosemantics"
-docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:dev /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/biosemantics_to_conll.py $DATA_DIR/biosemantics M,I,Y,D,B,C,F,R,G,MOA $CHEMICAL_DIR/biosemantics.conll"
-docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:dev /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/biosemantics_to_conll.py $DATA_DIR/biosemantics Disease $DISEASE_DIR/biosemantics.conll"
+docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:master /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/biosemantics_to_conll.py $DATA_DIR/biosemantics M,I,Y,D,B,C,F,R,G,MOA $CHEMICAL_DIR/biosemantics.conll"
+docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:master /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/biosemantics_to_conll.py $DATA_DIR/biosemantics Disease $DISEASE_DIR/biosemantics.conll"
 
 # CDR
 echo "Converting CDR"
 patch $DATA_DIR/CDR_Data/CDR.Corpus.v010516/CDR_TrainingSet.BioC.xml patches/CDR_TrainingSet.BioC.xml.patch -o $DATA_DIR/CDR_Data/CDR.Corpus.v010516/CDR_TrainingSet.BioC.xml.patched
-docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:dev /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/cdr_to_conll.py $DATA_DIR/CDR_Data/CDR.Corpus.v010516/CDR_DevelopmentSet.BioC.xml $DISEASE_DIR/cdr1.conll Disease"
-docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:dev /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/cdr_to_conll.py $DATA_DIR/CDR_Data/CDR.Corpus.v010516/CDR_DevelopmentSet.BioC.xml $CHEMICAL_DIR/cdr1.conll Chemical"
-docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:dev /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/cdr_to_conll.py $DATA_DIR/CDR_Data/CDR.Corpus.v010516/CDR_TestSet.BioC.xml $DISEASE_DIR/cdr2.conll Disease"
-docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:dev /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/cdr_to_conll.py $DATA_DIR/CDR_Data/CDR.Corpus.v010516/CDR_TestSet.BioC.xml $CHEMICAL_DIR/cdr2.conll Chemical"
-docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:dev /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/cdr_to_conll.py $DATA_DIR/CDR_Data/CDR.Corpus.v010516/CDR_TrainingSet.BioC.xml.patched $DISEASE_DIR/cdr3.conll Disease"
-docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:dev /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/cdr_to_conll.py $DATA_DIR/CDR_Data/CDR.Corpus.v010516/CDR_TrainingSet.BioC.xml.patched $CHEMICAL_DIR/cdr3.conll Chemical"
+docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:master /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/cdr_to_conll.py $DATA_DIR/CDR_Data/CDR.Corpus.v010516/CDR_DevelopmentSet.BioC.xml $DISEASE_DIR/cdr1.conll Disease"
+docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:master /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/cdr_to_conll.py $DATA_DIR/CDR_Data/CDR.Corpus.v010516/CDR_DevelopmentSet.BioC.xml $CHEMICAL_DIR/cdr1.conll Chemical"
+docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:master /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/cdr_to_conll.py $DATA_DIR/CDR_Data/CDR.Corpus.v010516/CDR_TestSet.BioC.xml $DISEASE_DIR/cdr2.conll Disease"
+docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:master /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/cdr_to_conll.py $DATA_DIR/CDR_Data/CDR.Corpus.v010516/CDR_TestSet.BioC.xml $CHEMICAL_DIR/cdr2.conll Chemical"
+docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:master /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/cdr_to_conll.py $DATA_DIR/CDR_Data/CDR.Corpus.v010516/CDR_TrainingSet.BioC.xml.patched $DISEASE_DIR/cdr3.conll Disease"
+docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:master /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/cdr_to_conll.py $DATA_DIR/CDR_Data/CDR.Corpus.v010516/CDR_TrainingSet.BioC.xml.patched $CHEMICAL_DIR/cdr3.conll Chemical"
 cat $DISEASE_DIR/cdr1.conll $DISEASE_DIR/cdr2.conll $DISEASE_DIR/cdr3.conll > $DISEASE_DIR/cdr.conll
 rm $DISEASE_DIR/cdr1.conll $DISEASE_DIR/cdr2.conll $DISEASE_DIR/cdr3.conll
 cat $CHEMICAL_DIR/cdr1.conll $CHEMICAL_DIR/cdr2.conll $CHEMICAL_DIR/cdr3.conll > $CHEMICAL_DIR/cdr.conll
@@ -56,78 +56,78 @@ rm $CHEMICAL_DIR/cdr1.conll $CHEMICAL_DIR/cdr2.conll $CHEMICAL_DIR/cdr3.conll
 
 # CellFinder
 echo "Converting Cellfinder"
-docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:dev /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/cellfinder_to_conll.py $DATA_DIR/cellfinder CellLine $CELLLINE_DIR/cellfinder.conll"
-docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:dev /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/cellfinder_to_conll.py $DATA_DIR/cellfinder Species $SPECIES_DIR/cellfinder.conll"
-docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:dev /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/cellfinder_to_conll.py $DATA_DIR/cellfinder GeneProtein $GENE_DIR/cellfinder.conll"
+docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:master /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/cellfinder_to_conll.py $DATA_DIR/cellfinder CellLine $CELLLINE_DIR/cellfinder.conll"
+docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:master /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/cellfinder_to_conll.py $DATA_DIR/cellfinder Species $SPECIES_DIR/cellfinder.conll"
+docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:master /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/cellfinder_to_conll.py $DATA_DIR/cellfinder GeneProtein $GENE_DIR/cellfinder.conll"
 
 # CEMP
 echo "Converting CEMP"
-docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:dev /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/gpro_gene_to_conll.py $DATA_DIR/cemp_train.txt $DATA_DIR/cemp_train.ann $CHEMICAL_DIR/cemp1.conll"
-docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:dev /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/gpro_gene_to_conll.py $DATA_DIR/cemp_val.txt $DATA_DIR/cemp_val.ann $CHEMICAL_DIR/cemp2.conll"
+docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:master /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/gpro_gene_to_conll.py $DATA_DIR/cemp_train.txt $DATA_DIR/cemp_train.ann $CHEMICAL_DIR/cemp1.conll"
+docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:master /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/gpro_gene_to_conll.py $DATA_DIR/cemp_val.txt $DATA_DIR/cemp_val.ann $CHEMICAL_DIR/cemp2.conll"
 cat $CHEMICAL_DIR/cemp1.conll $CHEMICAL_DIR/cemp2.conll > $CHEMICAL_DIR/cemp.conll
 rm $CHEMICAL_DIR/cemp1.conll $CHEMICAL_DIR/cemp2.conll
 
 # CHEBI
-docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:dev /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/chebi_to_conll.py $DATA_DIR/chebi $CHEMICAL_DIR/chebi.conll"
+docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:master /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/chebi_to_conll.py $DATA_DIR/chebi $CHEMICAL_DIR/chebi.conll"
 
 # CHEMDNER
 echo "Converting CHEMDNER"
-docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:dev /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/gpro_gene_to_conll.py $DATA_DIR/chemdner_test.txt $DATA_DIR/chemdner_test.ann $CHEMICAL_DIR/chemdner1.conll"
-docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:dev /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/gpro_gene_to_conll.py $DATA_DIR/chemdner_train.txt $DATA_DIR/chemdner_train.ann $CHEMICAL_DIR/chemdner2.conll"
-docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:dev /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/gpro_gene_to_conll.py $DATA_DIR/chemdner_val.txt $DATA_DIR/chemdner_val.ann $CHEMICAL_DIR/chemdner3.conll"
+docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:master /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/gpro_gene_to_conll.py $DATA_DIR/chemdner_test.txt $DATA_DIR/chemdner_test.ann $CHEMICAL_DIR/chemdner1.conll"
+docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:master /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/gpro_gene_to_conll.py $DATA_DIR/chemdner_train.txt $DATA_DIR/chemdner_train.ann $CHEMICAL_DIR/chemdner2.conll"
+docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:master /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/gpro_gene_to_conll.py $DATA_DIR/chemdner_val.txt $DATA_DIR/chemdner_val.ann $CHEMICAL_DIR/chemdner3.conll"
 cat $CHEMICAL_DIR/chemdner1.conll $CHEMICAL_DIR/chemdner2.conll $CHEMICAL_DIR/chemdner3.conll > $CHEMICAL_DIR/chemdner.conll
 rm $CHEMICAL_DIR/chemdner1.conll $CHEMICAL_DIR/chemdner2.conll $CHEMICAL_DIR/chemdner3.conll
 
 # CLL
 echo "Converting CLL"
-docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:dev /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/cll_cell_lines_to_conll.py $DATA_DIR/cll/* $CELLLINE_DIR/cll.conll"
+docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:master /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/cll_cell_lines_to_conll.py $DATA_DIR/cll/* $CELLLINE_DIR/cll.conll"
 
 # DECA
 echo "Converting DECA"
-docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:dev /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/deca_genes_to_conll.py $DATA_DIR/deca $GENE_DIR/deca.conll"
+docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:master /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/deca_genes_to_conll.py $DATA_DIR/deca $GENE_DIR/deca.conll"
 
 # FSU
 echo "Converting FSU"
-docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:dev /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/fsu_gene_to_conll.py $DATA_DIR/fsu/Genes_cytorec,$DATA_DIR/fsu/Genes_genetag1,$DATA_DIR/fsu/Genes_genetag2,$DATA_DIR/fsu/Genes_LLL_Aimed,$DATA_DIR/fsu/Genes_PIR,$DATA_DIR/fsu/Genes_x45_shuffled,$DATA_DIR/fsu/Proteins_0,$DATA_DIR/fsu/Proteins0_shuffled,$DATA_DIR/fsu/Proteins_5,$DATA_DIR/fsu/Proteins_ecoli,$DATA_DIR/fsu/Proteins_KIR $GENE_DIR/fsu.conll"
+docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:master /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/fsu_gene_to_conll.py $DATA_DIR/fsu/Genes_cytorec,$DATA_DIR/fsu/Genes_genetag1,$DATA_DIR/fsu/Genes_genetag2,$DATA_DIR/fsu/Genes_LLL_Aimed,$DATA_DIR/fsu/Genes_PIR,$DATA_DIR/fsu/Genes_x45_shuffled,$DATA_DIR/fsu/Proteins_0,$DATA_DIR/fsu/Proteins0_shuffled,$DATA_DIR/fsu/Proteins_5,$DATA_DIR/fsu/Proteins_ecoli,$DATA_DIR/fsu/Proteins_KIR $GENE_DIR/fsu.conll"
 
 # GELLUS
 echo "Converting GELLUS"
-docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:dev /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/gellus_to_conll.py $DATA_DIR/gellus/* $CELLLINE_DIR/gellus.conll"
+docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:master /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/gellus_to_conll.py $DATA_DIR/gellus/* $CELLLINE_DIR/gellus.conll"
 sed -i 's/Cell-line-name/NP/' $CELLLINE_DIR/gellus.conll
 
 # GPRO
 echo "Converting GPRO"
-docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:dev /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/gpro_gene_to_conll.py $DATA_DIR/gpro/chemdner_patents_development_text.txt $DATA_DIR/gpro/chemdner_gpro_gold_standard_development.tsv $GENE_DIR/gpro1.conll"
-docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:dev /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/gpro_gene_to_conll.py $DATA_DIR/gpro/chemdner_patents_train_text.txt $DATA_DIR/gpro/chemdner_gpro_gold_standard_train_v02.tsv $GENE_DIR/gpro2.conll"
+docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:master /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/gpro_gene_to_conll.py $DATA_DIR/gpro/chemdner_patents_development_text.txt $DATA_DIR/gpro/chemdner_gpro_gold_standard_development.tsv $GENE_DIR/gpro1.conll"
+docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:master /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/gpro_gene_to_conll.py $DATA_DIR/gpro/chemdner_patents_train_text.txt $DATA_DIR/gpro/chemdner_gpro_gold_standard_train_v02.tsv $GENE_DIR/gpro2.conll"
 cat $GENE_DIR/gpro1.conll $GENE_DIR/gpro2.conll > $GENE_DIR/gpro.conll
 rm $GENE_DIR/gpro1.conll $GENE_DIR/gpro2.conll
 
 # IEPA
 echo "Converting IEPA"
-docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:dev /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/iepa_gene_to_conll.py $DATA_DIR/iepa.xml $GENE_DIR/iepa.conll"
+docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:master /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/iepa_gene_to_conll.py $DATA_DIR/iepa.xml $GENE_DIR/iepa.conll"
 
 # JNLPBA
 echo "Converting JNLPBA"
-docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:dev /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/jnlpba_to_conll.py $DATA_DIR/jnlpba/Genia4ERtask2.iob2 cell_line $CELLLINE_DIR/jnlpba.conll"
-docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:dev /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/jnlpba_to_conll.py $DATA_DIR/jnlpba/Genia4ERtask2.iob2 protein $GENE_DIR/jnlpba.conll"
+docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:master /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/jnlpba_to_conll.py $DATA_DIR/jnlpba/Genia4ERtask2.iob2 cell_line $CELLLINE_DIR/jnlpba.conll"
+docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:master /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/jnlpba_to_conll.py $DATA_DIR/jnlpba/Genia4ERtask2.iob2 protein $GENE_DIR/jnlpba.conll"
 
 # Linneaus
 echo "Converting Linneaus"
-docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:dev /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/linneaus_species_to_conll.py $DATA_DIR/linneaus $SPECIES_DIR/linneaus.conll"
+docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:master /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/linneaus_species_to_conll.py $DATA_DIR/linneaus $SPECIES_DIR/linneaus.conll"
 
 # Loctext
 echo "Converting Loctext"
-docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:dev /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/loctext_gene_to_conll.py $DATA_DIR/LocText uniprot,go $GENE_DIR/loctext.conll"
-docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:dev /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/loctext_gene_to_conll.py $DATA_DIR/LocText taxonomy $SPECIES_DIR/loctext.conll"
+docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:master /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/loctext_gene_to_conll.py $DATA_DIR/LocText uniprot,go $GENE_DIR/loctext.conll"
+docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:master /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/loctext_gene_to_conll.py $DATA_DIR/LocText taxonomy $SPECIES_DIR/loctext.conll"
 
 # miRNA
 echo "Converting miRNA"
-docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:dev /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/mirna_to_conll.py $DATA_DIR/miRNA_test.xml Genes/Proteins $GENE_DIR/miRNA1.conll"
-docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:dev /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/mirna_to_conll.py $DATA_DIR/miRNA_train.xml Genes/Proteins $GENE_DIR/miRNA2.conll"
-docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:dev /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/mirna_to_conll.py $DATA_DIR/miRNA_test.xml Species $SPECIES_DIR/miRNA1.conll"
-docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:dev /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/mirna_to_conll.py $DATA_DIR/miRNA_train.xml Species $SPECIES_DIR/miRNA2.conll"
-docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:dev /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/mirna_to_conll.py $DATA_DIR/miRNA_test.xml Diseases $DISEASE_DIR/miRNA1.conll"
-docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:dev /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/mirna_to_conll.py $DATA_DIR/miRNA_train.xml Diseases $DISEASE_DIR/miRNA2.conll"
+docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:master /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/mirna_to_conll.py $DATA_DIR/miRNA_test.xml Genes/Proteins $GENE_DIR/miRNA1.conll"
+docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:master /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/mirna_to_conll.py $DATA_DIR/miRNA_train.xml Genes/Proteins $GENE_DIR/miRNA2.conll"
+docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:master /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/mirna_to_conll.py $DATA_DIR/miRNA_test.xml Species $SPECIES_DIR/miRNA1.conll"
+docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:master /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/mirna_to_conll.py $DATA_DIR/miRNA_train.xml Species $SPECIES_DIR/miRNA2.conll"
+docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:master /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/mirna_to_conll.py $DATA_DIR/miRNA_test.xml Diseases $DISEASE_DIR/miRNA1.conll"
+docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:master /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/mirna_to_conll.py $DATA_DIR/miRNA_train.xml Diseases $DISEASE_DIR/miRNA2.conll"
 cat $GENE_DIR/miRNA1.conll $GENE_DIR/miRNA2.conll > $GENE_DIR/miRNA.conll
 rm $GENE_DIR/miRNA1.conll $GENE_DIR/miRNA2.conll
 cat $SPECIES_DIR/miRNA1.conll $SPECIES_DIR/miRNA2.conll > $SPECIES_DIR/miRNA.conll
@@ -138,34 +138,34 @@ rm $DISEASE_DIR/miRNA1.conll $DISEASE_DIR/miRNA2.conll
 # NCBI
 echo "Converting NCBI"
 patch $DATA_DIR/ncbi/NCBItrainset_corpus.txt $PATCH_DIR/NCBItrainset_corpus.patch -o $DATA_DIR/ncbi/NCBItrainset_corpus.txt.patched
-docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:dev /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/ncbi_diseases_to_conll.py $DATA_DIR/ncbi/NCBIdevelopset_corpus.txt $DISEASE_DIR/ncbi1.conll"
-docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:dev /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/ncbi_diseases_to_conll.py $DATA_DIR/ncbi/NCBItrainset_corpus.txt.patched $DISEASE_DIR/ncbi2.conll"
-docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:dev /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/ncbi_diseases_to_conll.py $DATA_DIR/ncbi/NCBItestset_corpus.txt $DISEASE_DIR/ncbi3.conll"
+docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:master /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/ncbi_diseases_to_conll.py $DATA_DIR/ncbi/NCBIdevelopset_corpus.txt $DISEASE_DIR/ncbi1.conll"
+docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:master /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/ncbi_diseases_to_conll.py $DATA_DIR/ncbi/NCBItrainset_corpus.txt.patched $DISEASE_DIR/ncbi2.conll"
+docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:master /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/ncbi_diseases_to_conll.py $DATA_DIR/ncbi/NCBItestset_corpus.txt $DISEASE_DIR/ncbi3.conll"
 cat $DISEASE_DIR/ncbi1.conll $DISEASE_DIR/ncbi2.conll $DISEASE_DIR/ncbi3.conll > $DISEASE_DIR/ncbi.conll
 rm $DISEASE_DIR/ncbi1.conll $DISEASE_DIR/ncbi2.conll $DISEASE_DIR/ncbi3.conll
 
 # Osiris
 echo "Converting Osiris"
-docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:dev /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/osiris_gene_to_conll.py $DATA_DIR/osiris ge $GENE_DIR/osiris.conll"
+docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:master /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/osiris_gene_to_conll.py $DATA_DIR/osiris ge $GENE_DIR/osiris.conll"
 
 # S800
 echo "Converting S800"
-docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:dev /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/S800_species_to_conll.py $DATA_DIR/s800 $SPECIES_DIR/s800.conll"
+docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:master /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/S800_species_to_conll.py $DATA_DIR/s800 $SPECIES_DIR/s800.conll"
 
 # SCAI Chemicals
 echo "Converting SCAI Chemicals"
-docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:dev /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/scai_to_conll.py $DATA_DIR/scai_chemicals.conll $CHEMICAL_DIR/scai_chemicals.conll"
+docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:master /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/scai_to_conll.py $DATA_DIR/scai_chemicals.conll $CHEMICAL_DIR/scai_chemicals.conll"
 
 # SCAI Diseases
 echo "Converting SCAI Diseases"
-docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:dev /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/scai_to_conll.py $DATA_DIR/scai_diseases.conll $DISEASE_DIR/scai_diseases.conll"
+docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:master /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/scai_to_conll.py $DATA_DIR/scai_diseases.conll $DISEASE_DIR/scai_diseases.conll"
 
 # Variome
 echo "Converting Variome"
 patch $DATA_DIR/variome.xml $PATCH_DIR/variome.patch -o $DATA_DIR/variome.xml.patched
-docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:dev /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/variome_to_conll.py $DATA_DIR/variome.xml.patched $GENE_DIR/variome.conll gene"
-docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:dev /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/variome_to_conll.py $DATA_DIR/variome.xml.patched $DISEASE_DIR/variome.conll Disorder,disease"
-docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:dev /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/variome_to_conll.py $DATA_DIR/variome.xml.patched $SPECIES_DIR/variome.conll Living_Beings"
+docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:master /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/variome_to_conll.py $DATA_DIR/variome.xml.patched $GENE_DIR/variome.conll gene"
+docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:master /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/variome_to_conll.py $DATA_DIR/variome.xml.patched $DISEASE_DIR/variome.conll Disorder,disease"
+docker run -t -i --volume ${PWD}:/usr/ner_scripts huner/huner:master /bin/bash -c "cd /usr/ner_scripts; python3 $SCRIPT_DIR/variome_to_conll.py $DATA_DIR/variome.xml.patched $SPECIES_DIR/variome.conll Living_Beings"
 
 echo "Splitting corpora"
 ./split_corpora.sh
