@@ -66,7 +66,7 @@ def extract_from_biocreative(f, annotation_type, split_sentences=False) :
                         sentence_idx, offset, end = sentence_splitter.map_offsets(o_offset, o_end)
                 annotated_entity = tmp_sentences[sentence_idx][offset:end]
                 true_entity = annotation.xpath('.//text')[0].text
-                assert annotated_entity == true_entity
+                assert annotated_entity.lower() == true_entity.lower()
 
                 tmp_entities[sentence_idx] += [(offset, end)]
 
