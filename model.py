@@ -9,7 +9,7 @@ import cPickle
 import joblib
 
 from utils import shared, set_values, get_name
-from nn import HiddenLayer, EmbeddingLayer, DropoutLayer, LSTM, forward
+from nn import HiddenLayer, EmbeddingLayer, DropoutLayer, LSTM, forward, conf
 from optimization import Optimization
 
 
@@ -139,6 +139,7 @@ class Model(object):
         # Network variables
         is_train = T.iscalar('is_train')
         word_ids = T.ivector(name='word_ids')
+        alpha_mask = T.fmatrix(name='alpha_mask')
         char_for_ids = T.imatrix(name='char_for_ids')
         char_rev_ids = T.imatrix(name='char_rev_ids')
         char_pos_ids = T.ivector(name='char_pos_ids')
@@ -355,6 +356,7 @@ class Model(object):
         if cap_dim:
             eval_inputs.append(cap_ids)
         train_inputs = eval_inputs + [tag_ids]
+        conf_inputs = eval_inputs + [alpha_mask]
 
         # Parse optimization method parameters
         if "-" in lr_method:
@@ -388,6 +390,7 @@ class Model(object):
                 outputs=tags_scores,
                 givens=({is_train: np.cast['int32'](0)} if dropout else {})
             )
+            f_conf = None
         else:
             f_eval = theano.function(
                 inputs=eval_inputs,
@@ -396,4 +399,11 @@ class Model(object):
                 givens=({is_train: np.cast['int32'](0)} if dropout else {})
             )
 
-        return f_train, f_eval
+            f_conf = theano.function(
+                inputs=conf_inputs,
+                outputs=conf(observations, transitions, alpha_mask),
+                givens=({is_train: np.cast['int32'](0)} if dropout else {}),
+                on_unused_input='ignore'
+            )
+
+        return f_train, f_eval, f_conf

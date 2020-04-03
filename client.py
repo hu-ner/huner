@@ -108,7 +108,8 @@ if __name__ == '__main__':
     parser.add_argument("--name", required=True)
     parser.add_argument("--assume_sentence_splitted", action='store_true')
     parser.add_argument("--assume_tokenized", action='store_true')
-    parser.add_argument("--batchsize", type=int, default=256) 
+    parser.add_argument("--output_confidence", action='store_true')
+    parser.add_argument("--batchsize", type=int, default=256)
     args = parser.parse_args()
 
     tagger = HUNERTagger(names=[args.name])
@@ -136,7 +137,10 @@ if __name__ == '__main__':
         if buff:
             tagged_line = tagger.tag(buff, split_sentences=split_sentences, tokenize=not args.assume_tokenized)[0]
             for sentence in tagged_line:
-                for tok, tag in sentence:
-                    f_out.write(f"{tok}\tPOS\t{tag}\n")
+                for tok, tag, conf in sentence:
+                    if args.output_confidence:
+                        f_out.write(f"{tok}\tPOS\t{tag}\t{conf}\n")
+                    else:
+                        f_out.write(f"{tok}\tPOS\t{tag}\n")
                 f_out.write("\n")
 

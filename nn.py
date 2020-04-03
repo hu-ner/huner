@@ -280,3 +280,40 @@ def forward(observations, transitions, viterbi=False,
             return alpha[-1].max(axis=0)
         else:
             return log_sum_exp(alpha[-1], axis=0)
+
+def conf(observations, transitions, alpha_masks):
+
+    def forward(obs, previous, transitions):
+        previous = previous.dimshuffle(0, 'x')
+        obs = obs.dimshuffle('x', 0)
+        alpha_t = log_sum_exp(previous + obs + transitions, axis=0)
+        return alpha_t
+
+    def constrained_forward(obs, alpha_mask, previous, transitions):
+        previous = previous.dimshuffle(0, 'x')
+        obs = obs.dimshuffle('x', 0)
+        alpha_t = log_sum_exp(previous + obs + transitions, axis=0)
+        return alpha_t * alpha_mask
+
+    initial = observations[0]
+
+    alpha_unconstrained, _ = theano.scan(
+        fn=forward,
+        outputs_info=initial,
+        sequences=observations[1:],
+        non_sequences=transitions
+    )
+
+
+    alpha_constrained, _ = theano.scan(
+        fn=constrained_forward,
+        outputs_info=initial,
+        sequences=[observations[1:], alpha_masks],
+        non_sequences=transitions
+    )
+
+
+    constrained_prob = log_sum_exp(alpha_constrained[-1], axis=0)
+    unconstrained_prob = log_sum_exp(alpha_unconstrained[-1], axis=0)
+
+    return T.log(constrained_prob) - T.log(unconstrained_prob)
