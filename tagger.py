@@ -32,7 +32,7 @@ def split_sentences(text):
 
 def tokenize(sentence): 
     sentence = sentence.strip()
-    return tokenizer.parse(sentence).decode().split()
+    return tokenizer.parse(sentence).decode(encoding='utf8').split()
 
 
 # Load reverse mappings
