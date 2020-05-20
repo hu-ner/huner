@@ -108,8 +108,16 @@ if __name__ == '__main__':
     parser.add_argument("--name", required=True)
     parser.add_argument("--assume_sentence_splitted", action='store_true')
     parser.add_argument("--assume_tokenized", action='store_true')
+    parser.add_argument("--fix_encoding", action='store_true')
     parser.add_argument("--batchsize", type=int, default=256) 
     args = parser.parse_args()
+
+    if args.fix_encoding:
+        try:
+            import ftfy
+        except ImportError:
+            print('To use fix_encodings the ftfy package needs to be installed. Please install it using pip')
+            exit()
 
     tagger = HUNERTagger(names=[args.name])
     split_sentences = not args.assume_sentence_splitted and not args.assume_tokenized
@@ -118,6 +126,9 @@ if __name__ == '__main__':
         buff = []
         c = 0
         for line in f_in:
+            if args.fix_encoding:
+                line = ftfy.fix_text(line)
+                line = line.encode('ascii', 'ignore').decode()
             if args.assume_tokenized:
                 line = [line.split()]
             elif args.assume_sentence_splitted:
