@@ -1,4 +1,7 @@
 # HUNER
+
+*We recently published [HunFlair](https://github.com/flairNLP/flair/blob/master/resources/docs/HUNFLAIR.md), a reimplementation of HUNER inside the Flair framework. By using language models, HunFlair considerably outperforms HUNER. In addition, as part of Flair, HunFlair is easy to install and does not have a dependency on Docker. We recommend all HUNER users to migrate to HunFlair.*
+
 HUNER is a state-of-the-art NER model for biomedical entities. It comes with models for genes/proteins, chemicals, diseases, species and cell lines.
 
 The code is based on the great LSTM-CRF NER tagger implementation [glample/tagger](https://github.com/glample/tagger) by Guillaume Lample.
