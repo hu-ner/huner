@@ -64,11 +64,11 @@ After sucessful training, the model can be found in a newly created directory in
 # Models
 | Model | Test sets P / R / F1 (%) | CRAFT P / R / F1 (%) |
 |   -   |       -      |    -     |
-| [cellline_all](https://drive.google.com/open?id=1aqtenziAHmxEHeaHf8JGdTkRe21ovjts) | 65.09 / 67.69 / 66.08 | - |
+| [cellline_all](https://drive.google.com/open?id=1aqtenziAHmxEHeaHf8JGdTkRe21ovjts) | 70.40 / 65.37 / 67.76 | - |
 | [chemical_all](https://drive.google.com/open?id=1lEXPKiMZ0x3y51epBIS2kWHG3cNxnN4r) | 83.34 / 80.26 / 81.71 | 53.56 / 35.85 / 42.95 |
 | [disease_all](https://drive.google.com/open?id=12vdtSi3hg_htCXXROKkPV4jaDO3ep8OY) | 75.01 / 77.71 / 76.20 | - |
-| [gene_all](https://drive.google.com/open?id=1xdMkeA5HynmrAe4Ky2QwJAqCjP3pp2EO) | 75.01 / 79.16 / 76.81 | 59.67 / 65.98 / 62.66 |
-| [species_all](https://drive.google.com/open?id=1JO6JuG2gz7W3C_44dJ0gmCozKKFsAEo6) | 85.37 / 79.98 / 82.59| 98.51 / 73.83 / 84.40 |
+| [gene_all](https://drive.google.com/open?id=1xdMkeA5HynmrAe4Ky2QwJAqCjP3pp2EO) | 72.33 / 76.28 / 73.97 | 59.67 / 65.98 / 62.66 |
+| [species_all](https://drive.google.com/open?id=1JO6JuG2gz7W3C_44dJ0gmCozKKFsAEo6) | 77.88 / 74.86 / 73.33 | 98.51 / 73.83 / 84.40 |
 
 # Corpora
 For details and instructions on the HUNER corpora please refer to https://github.com/hu-ner/huner/tree/master/ner_scripts and the corresponding readme.
