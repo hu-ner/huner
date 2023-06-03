@@ -71,7 +71,26 @@ if __name__ == '__main__':
         path = os.path.join(data_dir, 'cellfinder')
         os.makedirs(path)
         with tarfile.open("cellfinder.tar.gz") as f:
-            f.extractall(path)
+            def is_within_directory(directory, target):
+                
+                abs_directory = os.path.abspath(directory)
+                abs_target = os.path.abspath(target)
+            
+                prefix = os.path.commonprefix([abs_directory, abs_target])
+                
+                return prefix == abs_directory
+            
+            def safe_extract(tar, path=".", members=None, *, numeric_owner=False):
+            
+                for member in tar.getmembers():
+                    member_path = os.path.join(path, member.name)
+                    if not is_within_directory(path, member_path):
+                        raise Exception("Attempted Path Traversal in Tar File")
+            
+                tar.extractall(path, members, numeric_owner=numeric_owner) 
+                
+            
+            safe_extract(f, path)
         os.remove("cellfinder.tar.gz")
 
     # CHEMDNER Patents
@@ -85,11 +104,49 @@ if __name__ == '__main__':
             fp.write(resp.content)
 
         with tarfile.open('cemp_train.tar.gz') as f:
-            f.extractall()
+            def is_within_directory(directory, target):
+                
+                abs_directory = os.path.abspath(directory)
+                abs_target = os.path.abspath(target)
+            
+                prefix = os.path.commonprefix([abs_directory, abs_target])
+                
+                return prefix == abs_directory
+            
+            def safe_extract(tar, path=".", members=None, *, numeric_owner=False):
+            
+                for member in tar.getmembers():
+                    member_path = os.path.join(path, member.name)
+                    if not is_within_directory(path, member_path):
+                        raise Exception("Attempted Path Traversal in Tar File")
+            
+                tar.extractall(path, members, numeric_owner=numeric_owner) 
+                
+            
+            safe_extract(f)
         os.remove('cemp_train.tar.gz')
 
         with tarfile.open('cemp_val.tar.gz') as f:
-            f.extractall()
+            def is_within_directory(directory, target):
+                
+                abs_directory = os.path.abspath(directory)
+                abs_target = os.path.abspath(target)
+            
+                prefix = os.path.commonprefix([abs_directory, abs_target])
+                
+                return prefix == abs_directory
+            
+            def safe_extract(tar, path=".", members=None, *, numeric_owner=False):
+            
+                for member in tar.getmembers():
+                    member_path = os.path.join(path, member.name)
+                    if not is_within_directory(path, member_path):
+                        raise Exception("Attempted Path Traversal in Tar File")
+            
+                tar.extractall(path, members, numeric_owner=numeric_owner) 
+                
+            
+            safe_extract(f)
         os.remove('cemp_val.tar.gz')
 
         shutil.move(os.path.join('cemp_training_set', 'chemdner_patents_train_text.txt'),
@@ -111,7 +168,26 @@ if __name__ == '__main__':
         cmd = shlex.split(cmd)
         subprocess.run(cmd)
         with tarfile.open(os.path.join('chapati', 'patentsGoldStandard', 'PatentAnnotations_GoldStandard.tgz')) as f:
-            f.extractall()
+            def is_within_directory(directory, target):
+                
+                abs_directory = os.path.abspath(directory)
+                abs_target = os.path.abspath(target)
+            
+                prefix = os.path.commonprefix([abs_directory, abs_target])
+                
+                return prefix == abs_directory
+            
+            def safe_extract(tar, path=".", members=None, *, numeric_owner=False):
+            
+                for member in tar.getmembers():
+                    member_path = os.path.join(path, member.name)
+                    if not is_within_directory(path, member_path):
+                        raise Exception("Attempted Path Traversal in Tar File")
+            
+                tar.extractall(path, members, numeric_owner=numeric_owner) 
+                
+            
+            safe_extract(f)
             shutil.move('scrapbook', os.path.join(data_dir, 'chebi'))
         shutil.rmtree('chapati')
 
@@ -127,7 +203,26 @@ if __name__ == '__main__':
             fp.write(resp.content)
 
         with tarfile.open('chemdner.tar.gz') as f:
-            f.extractall()
+            def is_within_directory(directory, target):
+                
+                abs_directory = os.path.abspath(directory)
+                abs_target = os.path.abspath(target)
+            
+                prefix = os.path.commonprefix([abs_directory, abs_target])
+                
+                return prefix == abs_directory
+            
+            def safe_extract(tar, path=".", members=None, *, numeric_owner=False):
+            
+                for member in tar.getmembers():
+                    member_path = os.path.join(path, member.name)
+                    if not is_within_directory(path, member_path):
+                        raise Exception("Attempted Path Traversal in Tar File")
+            
+                tar.extractall(path, members, numeric_owner=numeric_owner) 
+                
+            
+            safe_extract(f)
         shutil.move(os.path.join('chemdner_corpus', 'training.abstracts.txt'),
                     os.path.join(data_dir, 'chemdner_train.txt'))
         shutil.move(os.path.join('chemdner_corpus', 'training.annotations.txt'),
@@ -150,7 +245,26 @@ if __name__ == '__main__':
             fp.write(resp.content)
 
         with tarfile.open('cll.tar.gz') as f:
-            f.extractall()
+            def is_within_directory(directory, target):
+                
+                abs_directory = os.path.abspath(directory)
+                abs_target = os.path.abspath(target)
+            
+                prefix = os.path.commonprefix([abs_directory, abs_target])
+                
+                return prefix == abs_directory
+            
+            def safe_extract(tar, path=".", members=None, *, numeric_owner=False):
+            
+                for member in tar.getmembers():
+                    member_path = os.path.join(path, member.name)
+                    if not is_within_directory(path, member_path):
+                        raise Exception("Attempted Path Traversal in Tar File")
+            
+                tar.extractall(path, members, numeric_owner=numeric_owner) 
+                
+            
+            safe_extract(f)
         shutil.move(os.path.join('CLL-1.0.2', 'conll'),
                     os.path.join(data_dir, 'cll'))
         os.remove('cll.tar.gz')
@@ -163,7 +277,26 @@ if __name__ == '__main__':
             fp.write(resp.content)
 
         with tarfile.open('gellus.tar.gz') as f:
-            f.extractall()
+            def is_within_directory(directory, target):
+                
+                abs_directory = os.path.abspath(directory)
+                abs_target = os.path.abspath(target)
+            
+                prefix = os.path.commonprefix([abs_directory, abs_target])
+                
+                return prefix == abs_directory
+            
+            def safe_extract(tar, path=".", members=None, *, numeric_owner=False):
+            
+                for member in tar.getmembers():
+                    member_path = os.path.join(path, member.name)
+                    if not is_within_directory(path, member_path):
+                        raise Exception("Attempted Path Traversal in Tar File")
+            
+                tar.extractall(path, members, numeric_owner=numeric_owner) 
+                
+            
+            safe_extract(f)
         shutil.move(os.path.join(parent_dir,'GELLUS-1.0.3','conll','all'),
                     os.path.join(data_dir, 'gellus'))
         os.remove('gellus.tar.gz')
@@ -176,7 +309,26 @@ if __name__ == '__main__':
             fp.write(resp.content)
 
         with tarfile.open('deca.tar.gz') as f:
-            f.extractall()
+            def is_within_directory(directory, target):
+                
+                abs_directory = os.path.abspath(directory)
+                abs_target = os.path.abspath(target)
+            
+                prefix = os.path.commonprefix([abs_directory, abs_target])
+                
+                return prefix == abs_directory
+            
+            def safe_extract(tar, path=".", members=None, *, numeric_owner=False):
+            
+                for member in tar.getmembers():
+                    member_path = os.path.join(path, member.name)
+                    if not is_within_directory(path, member_path):
+                        raise Exception("Attempted Path Traversal in Tar File")
+            
+                tar.extractall(path, members, numeric_owner=numeric_owner) 
+                
+            
+            safe_extract(f)
         shutil.move('species_corpus_0.2', os.path.join(data_dir, 'deca'))
         os.remove('deca.tar.gz')
 
@@ -187,7 +339,26 @@ if __name__ == '__main__':
             fp.write(resp.content)
 
         with tarfile.open('fsu.tar.gz') as f:
-            f.extractall()
+            def is_within_directory(directory, target):
+                
+                abs_directory = os.path.abspath(directory)
+                abs_target = os.path.abspath(target)
+            
+                prefix = os.path.commonprefix([abs_directory, abs_target])
+                
+                return prefix == abs_directory
+            
+            def safe_extract(tar, path=".", members=None, *, numeric_owner=False):
+            
+                for member in tar.getmembers():
+                    member_path = os.path.join(path, member.name)
+                    if not is_within_directory(path, member_path):
+                        raise Exception("Attempted Path Traversal in Tar File")
+            
+                tar.extractall(path, members, numeric_owner=numeric_owner) 
+                
+            
+            safe_extract(f)
         shutil.move('fsu-prge-release-v1.0', os.path.join(data_dir, 'fsu'))
         os.remove('fsu.tar.gz')
 
@@ -202,10 +373,48 @@ if __name__ == '__main__':
             fp.write(resp.content)
 
         with tarfile.open('gpro_train.tar.gz') as f:
-            f.extractall()
+            def is_within_directory(directory, target):
+                
+                abs_directory = os.path.abspath(directory)
+                abs_target = os.path.abspath(target)
+            
+                prefix = os.path.commonprefix([abs_directory, abs_target])
+                
+                return prefix == abs_directory
+            
+            def safe_extract(tar, path=".", members=None, *, numeric_owner=False):
+            
+                for member in tar.getmembers():
+                    member_path = os.path.join(path, member.name)
+                    if not is_within_directory(path, member_path):
+                        raise Exception("Attempted Path Traversal in Tar File")
+            
+                tar.extractall(path, members, numeric_owner=numeric_owner) 
+                
+            
+            safe_extract(f)
 
         with tarfile.open('gpro_val.tar.gz') as f:
-            f.extractall()
+            def is_within_directory(directory, target):
+                
+                abs_directory = os.path.abspath(directory)
+                abs_target = os.path.abspath(target)
+            
+                prefix = os.path.commonprefix([abs_directory, abs_target])
+                
+                return prefix == abs_directory
+            
+            def safe_extract(tar, path=".", members=None, *, numeric_owner=False):
+            
+                for member in tar.getmembers():
+                    member_path = os.path.join(path, member.name)
+                    if not is_within_directory(path, member_path):
+                        raise Exception("Attempted Path Traversal in Tar File")
+            
+                tar.extractall(path, members, numeric_owner=numeric_owner) 
+                
+            
+            safe_extract(f)
 
         corpus_dir = os.path.join(data_dir, 'gpro')
         os.makedirs(corpus_dir, exist_ok=True)
@@ -237,9 +446,47 @@ if __name__ == '__main__':
             resp = requests.get('http://www.nactem.ac.uk/GENIA/current/Shared-tasks/JNLPBA/Evaluation/Genia4ERtest.tar.gz')
             fp.write(resp.content)
         with tarfile.open('genia_train.tar.gz') as f:
-            f.extractall(os.path.join(data_dir, 'jnlpba'))
+            def is_within_directory(directory, target):
+                
+                abs_directory = os.path.abspath(directory)
+                abs_target = os.path.abspath(target)
+            
+                prefix = os.path.commonprefix([abs_directory, abs_target])
+                
+                return prefix == abs_directory
+            
+            def safe_extract(tar, path=".", members=None, *, numeric_owner=False):
+            
+                for member in tar.getmembers():
+                    member_path = os.path.join(path, member.name)
+                    if not is_within_directory(path, member_path):
+                        raise Exception("Attempted Path Traversal in Tar File")
+            
+                tar.extractall(path, members, numeric_owner=numeric_owner) 
+                
+            
+            safe_extract(f, os.path.join(data_dir,"jnlpba"))
         with tarfile.open('genia_test.tar.gz') as f:
-            f.extractall(os.path.join(data_dir, 'jnlpba'))
+            def is_within_directory(directory, target):
+                
+                abs_directory = os.path.abspath(directory)
+                abs_target = os.path.abspath(target)
+            
+                prefix = os.path.commonprefix([abs_directory, abs_target])
+                
+                return prefix == abs_directory
+            
+            def safe_extract(tar, path=".", members=None, *, numeric_owner=False):
+            
+                for member in tar.getmembers():
+                    member_path = os.path.join(path, member.name)
+                    if not is_within_directory(path, member_path):
+                        raise Exception("Attempted Path Traversal in Tar File")
+            
+                tar.extractall(path, members, numeric_owner=numeric_owner) 
+                
+            
+            safe_extract(f, os.path.join(data_dir,"jnlpba"))
         os.remove('genia_train.tar.gz')
         os.remove('genia_test.tar.gz')
 
@@ -249,7 +496,26 @@ if __name__ == '__main__':
             resp = requests.get('https://sourceforge.net/projects/linnaeus/files/Corpora/manual-corpus-species-1.0.tar.gz/download')
             fp.write(resp.content)
         with tarfile.open('linneaus.tar.gz') as f:
-            f.extractall()
+            def is_within_directory(directory, target):
+                
+                abs_directory = os.path.abspath(directory)
+                abs_target = os.path.abspath(target)
+            
+                prefix = os.path.commonprefix([abs_directory, abs_target])
+                
+                return prefix == abs_directory
+            
+            def safe_extract(tar, path=".", members=None, *, numeric_owner=False):
+            
+                for member in tar.getmembers():
+                    member_path = os.path.join(path, member.name)
+                    if not is_within_directory(path, member_path):
+                        raise Exception("Attempted Path Traversal in Tar File")
+            
+                tar.extractall(path, members, numeric_owner=numeric_owner) 
+                
+            
+            safe_extract(f)
         shutil.move('manual-corpus-species-1.0',
                     os.path.join(data_dir, 'linneaus'))
         os.remove('linneaus.tar.gz')
@@ -290,7 +556,26 @@ if __name__ == '__main__':
             resp = requests.get('http://ibi.imim.es/OSIRIScorpusv02.tar')
             fp.write(resp.content)
         with tarfile.open('osiris.tar') as f:
-            f.extractall()
+            def is_within_directory(directory, target):
+                
+                abs_directory = os.path.abspath(directory)
+                abs_target = os.path.abspath(target)
+            
+                prefix = os.path.commonprefix([abs_directory, abs_target])
+                
+                return prefix == abs_directory
+            
+            def safe_extract(tar, path=".", members=None, *, numeric_owner=False):
+            
+                for member in tar.getmembers():
+                    member_path = os.path.join(path, member.name)
+                    if not is_within_directory(path, member_path):
+                        raise Exception("Attempted Path Traversal in Tar File")
+            
+                tar.extractall(path, members, numeric_owner=numeric_owner) 
+                
+            
+            safe_extract(f)
         shutil.move('OSIRIScorpusv02',
                     os.path.join(data_dir, 'osiris'))
         os.remove('osiris.tar')
@@ -301,7 +586,26 @@ if __name__ == '__main__':
             resp = requests.get('https://species.jensenlab.org/files/S800-1.0.tar.gz')
             fp.write(resp.content)
         with tarfile.open('s800.tar.gz') as f:
-            f.extractall(os.path.join(data_dir, 's800'))
+            def is_within_directory(directory, target):
+                
+                abs_directory = os.path.abspath(directory)
+                abs_target = os.path.abspath(target)
+            
+                prefix = os.path.commonprefix([abs_directory, abs_target])
+                
+                return prefix == abs_directory
+            
+            def safe_extract(tar, path=".", members=None, *, numeric_owner=False):
+            
+                for member in tar.getmembers():
+                    member_path = os.path.join(path, member.name)
+                    if not is_within_directory(path, member_path):
+                        raise Exception("Attempted Path Traversal in Tar File")
+            
+                tar.extractall(path, members, numeric_owner=numeric_owner) 
+                
+            
+            safe_extract(f, os.path.join(data_dir,"s800"))
         os.remove('s800.tar.gz')
 
     # SCAI Chemicals
@@ -335,7 +639,26 @@ if __name__ == '__main__':
             resp = requests.get('http://pubannotation.org/projects/LocText/annotations.tgz')
             fp.write(resp.content)
         with tarfile.open('loctext.tar.gz') as f:
-            f.extractall()
+            def is_within_directory(directory, target):
+                
+                abs_directory = os.path.abspath(directory)
+                abs_target = os.path.abspath(target)
+            
+                prefix = os.path.commonprefix([abs_directory, abs_target])
+                
+                return prefix == abs_directory
+            
+            def safe_extract(tar, path=".", members=None, *, numeric_owner=False):
+            
+                for member in tar.getmembers():
+                    member_path = os.path.join(path, member.name)
+                    if not is_within_directory(path, member_path):
+                        raise Exception("Attempted Path Traversal in Tar File")
+            
+                tar.extractall(path, members, numeric_owner=numeric_owner) 
+                
+            
+            safe_extract(f)
         shutil.move('LocText', os.path.join(data_dir))
         os.remove('loctext.tar.gz')
 
